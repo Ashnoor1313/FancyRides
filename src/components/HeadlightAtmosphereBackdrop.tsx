@@ -5,15 +5,28 @@ import { Zap, Eye, Sliders } from 'lucide-react';
 interface HeadlightAtmosphereBackdropProps {
   title?: string;
   subtitle?: string;
+  image?: string;
   className?: string;
   showControls?: boolean;
+  telemetryLeft?: {
+    status?: string;
+    flux?: string;
+    beam?: string;
+  };
+  telemetryRight?: {
+    label?: string;
+    value?: string;
+  };
 }
 
 export const HeadlightAtmosphereBackdrop: React.FC<HeadlightAtmosphereBackdropProps> = ({
-  title = "THE SHADOW PREDATOR",
-  subtitle = "BMW S 1000 RR // TWIN LASER HEADLIGHT ARCHITECTURE",
+  title = "THE CLASSIC TWIN",
+  subtitle = "ROYAL ENFIELD INTERCEPTOR 650 // RETRO BEAM & 4-WAY HAZARD FLASHER",
+  image = "/images/IMG_0196.JPG",
   className = "",
   showControls = true,
+  telemetryLeft,
+  telemetryRight,
 }) => {
   // Lighting state: 'drl' | 'highbeam' | 'strobe'
   const [lightMode, setLightMode] = useState<'drl' | 'highbeam' | 'strobe'>('highbeam');
@@ -74,10 +87,10 @@ export const HeadlightAtmosphereBackdrop: React.FC<HeadlightAtmosphereBackdropPr
             transition: 'transform 0.25s ease-out',
           }}
         >
-          {/* S1000RR Front Silhouette Image */}
+          {/* Front Headlight Silhouette Image */}
           <img
-            src="/images/bmw-360-front.jpg"
-            alt="BMW S 1000 RR Front Laser Headlights"
+            src={image}
+            alt="Royal Enfield Interceptor Front Headlight"
             className="w-full h-full object-contain"
             style={{
               filter: isHighBeam
@@ -292,16 +305,16 @@ export const HeadlightAtmosphereBackdrop: React.FC<HeadlightAtmosphereBackdropPr
           <div className="font-mono text-[0.72rem] text-[#888] space-y-1">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span>HEADLIGHT SENSORS: <strong>ACTIVE</strong></span>
+              <span>{telemetryLeft?.status || 'HEADLIGHT SENSORS: ACTIVE'}</span>
             </div>
-            <div>VOLUMETRIC FLUX: <span className="text-[#FF5A1F]">2,450 LUMENS // BI-LED LASER</span></div>
-            <div>BEAM ANGLE DYNAMICS: <span className="text-white">±22° CORNERING ADAPTIVE</span></div>
+            <div>VOLUMETRIC FLUX: <span className="text-[#FF5A1F]">{telemetryLeft?.flux || '2,450 LUMENS // RETRO BEAM'}</span></div>
+            <div>BEAM ANGLE DYNAMICS: <span className="text-white">{telemetryLeft?.beam || 'HIGH CLARITY ROAD ILLUMINATION'}</span></div>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="text-right font-mono text-[0.72rem]">
-              <span className="text-[#666] block">AERODYNAMIC M WINGLETS</span>
-              <span className="text-white font-bold tracking-wider">17.1 KG DOWNFORCE @ 300 KM/H</span>
+              <span className="text-[#666] block">{telemetryRight?.label || 'FRONT SUSPENSION'}</span>
+              <span className="text-white font-bold tracking-wider">{telemetryRight?.value || 'PRECISION BALANCED STANCE'}</span>
             </div>
           </div>
         </div>

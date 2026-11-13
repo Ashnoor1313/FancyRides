@@ -14,73 +14,301 @@ interface CameraAngle {
   description: string;
 }
 
-const CAMERA_ANGLES: CameraAngle[] = [
-  {
-    id: 'side',
-    label: 'SIDE PROFILE',
-    deg: 0,
-    image: '/images/bmw-360-side.jpg',
-    description: 'Direct side profile showcasing M chassis geometry & wheel wheelbase',
-  },
+const INTERCEPTOR_ANGLES: CameraAngle[] = [
   {
     id: 'front34',
-    label: 'DYNAMIC 3/4',
-    deg: 45,
-    image: '/images/bmw-360-front34.jpg',
-    description: 'Three-quarter dynamic perspective emphasizing carbon winglets',
+    label: 'FRONT 3/4',
+    deg: 0,
+    image: '/images/IMG_0195.JPG',
+    description: 'Three-quarter front view — Hollywood handlebar stance & classic round headlamp',
   },
   {
     id: 'front',
-    label: 'FRONT AERO',
-    deg: 90,
-    image: '/images/bmw-360-front.jpg',
-    description: 'Aggressive head-on aerodynamic intake and LED twin headlights',
+    label: 'FRONT',
+    deg: 45,
+    image: '/images/IMG_0196.JPG',
+    description: 'Head-on classic chrome front end with Fancy Rides India number plate',
   },
   {
-    id: 'rear34',
-    label: 'REAR EXHAUST',
+    id: 'side',
+    label: 'SIDE PROFILE',
+    deg: 90,
+    image: '/images/IMG_0211.JPG',
+    description: 'Full side profile showing the iconic Interceptor silhouette — tank, seat and chrome engine',
+  },
+  {
+    id: 'rear',
+    label: 'REAR / EXHAUST',
     deg: 315,
-    image: '/images/bmw-360-rear34.jpg',
-    description: 'Titanium Akrapovič exhaust line and aerodynamically vented tail cowl',
+    image: '/images/IMG_0201.JPG',
+    description: 'Rear three-quarter showing new rear tyre & Red Rooster chrome exhaust tips',
   },
 ];
 
-const HOTSPOTS = [
-  {
-    id: 'winglets',
-    angleId: 'front',
-    top: '48%',
-    left: '38%',
-    title: 'M Carbon Winglets',
-    detail: 'Generates 17.1 KG aerodynamic downforce @ 300 km/h, preventing front wheel lift.',
-  },
+const INTERCEPTOR_HOTSPOTS = [
   {
     id: 'exhaust',
-    angleId: 'rear34',
-    top: '52%',
-    left: '46%',
-    title: 'Akrapovič Factory Titanium',
-    detail: 'Full titanium header and canister with dry carbon heat shield, saving 4.8 KG.',
+    angleId: 'rear',
+    top: '68%',
+    left: '28%',
+    title: 'Red Rooster Performance Exhaust',
+    detail: 'Original Red Rooster Performance slip-on — chrome finish, deeper parallel twin note with zero restriction.',
+  },
+  {
+    id: 'handlebar',
+    angleId: 'front',
+    top: '22%',
+    left: '50%',
+    title: 'Hollywood Handlebar',
+    detail: 'Wide Hollywood-style handlebar fitted for a relaxed cafe racer riding posture — a head-turning classic touch.',
   },
   {
     id: 'engine',
     angleId: 'side',
-    top: '56%',
+    top: '58%',
     left: '52%',
-    title: 'BMW ShiftCam 999cc',
-    detail: 'Variable valve timing delivering 207 HP @ 13,750 RPM and broad low-end torque.',
+    title: '648cc Parallel Twin',
+    detail: '47 BHP @ 7,150 RPM and 52 Nm @ 5,150 RPM. Air-oil cooled SOHC twin with slipper & assist clutch.',
   },
   {
-    id: 'brakes',
+    id: 'rear-tyre',
+    angleId: 'rear',
+    top: '72%',
+    left: '52%',
+    title: 'Brand New Rear Tyre',
+    detail: '130/70-18 rear tyre — freshly replaced, full tread depth, ready for immediate riding.',
+  },
+];
+
+const HARLEY_ANGLES: CameraAngle[] = [
+  {
+    id: 'front34',
+    label: 'FRONT 3/4',
+    deg: 0,
+    image: '/images/hd48/IMG_0035.jpg',
+    description: 'Three-quarter front view — Vivid Yellow peanut tank & fat Shinko Forty-Eight front tyre',
+  },
+  {
+    id: 'front',
+    label: 'FRONT',
+    deg: 45,
+    image: '/images/hd48/IMG_0037.jpg',
+    description: 'Direct bobber front end with custom headlamp grill & aftermarket indicators',
+  },
+  {
+    id: 'side',
+    label: 'SIDE PROFILE',
+    deg: 90,
+    image: '/images/hd48/IMG_0045.jpg',
+    description: 'Full side profile showing 1202cc Evolution V-Twin, chrome engine guard & Vance & Hines exhaust',
+  },
+  {
+    id: 'rear',
+    label: 'REAR / EXHAUST',
+    deg: 315,
+    image: '/images/hd48/IMG_0041.jpg',
+    description: 'Rear view showing pillion seat, side mount number plate & Vance & Hines dual exhaust pipes',
+  },
+];
+
+const HARLEY_HOTSPOTS = [
+  {
+    id: 'exhaust',
+    angleId: 'rear',
+    top: '70%',
+    left: '32%',
+    title: 'Vance & Hines Exhaust',
+    detail: 'Authentic Vance & Hines performance pipes delivering signature Sportster thunder and unrestrained roar.',
+  },
+  {
+    id: 'engine-guard',
+    angleId: 'side',
+    top: '52%',
+    left: '34%',
+    title: 'Engine Guard (Chrome)',
+    detail: 'Heavy-duty chrome engine guard providing vital crankcase protection with highway cruising comfort.',
+  },
+  {
+    id: 'pillion-seat',
+    angleId: 'rear',
+    top: '46%',
+    left: '52%',
+    title: 'Pillion Seat & Pegs',
+    detail: 'Fitted matching rear pillion seat and passenger footpegs for comfortable two-up riding.',
+  },
+  {
+    id: 'side-plate',
+    angleId: 'rear',
+    top: '64%',
+    left: '74%',
+    title: 'Side Mount Number Plate',
+    detail: 'Custom offset side-mount registration plate bracket keeping the chopped rear fender sleek and aggressive.',
+  },
+  {
+    id: 'front-accessories',
+    angleId: 'front',
+    top: '25%',
+    left: '48%',
+    title: 'Hand Grips & Headlamp Grill',
+    detail: 'Aftermarket knurled hand grips, custom cross-hatch headlamp grill, and sleek bullet front indicators.',
+  },
+];
+
+const FATBOB_ANGLES: CameraAngle[] = [
+  {
+    id: 'front34',
+    label: 'FRONT 3/4 HERO',
+    deg: 0,
+    image: '/images/fatbob/IMG_0065.jpg',
+    description: 'Imposing front 3/4 stance — signature twin headlights, fat front tyre & Vance & Hines Shortshots',
+  },
+  {
+    id: 'front',
+    label: 'TWIN HEADLIGHTS',
+    deg: 45,
+    image: '/images/fatbob/IMG_0055.jpg',
+    description: 'Direct front view with Fancy Rides India plate, dual chrome headlights & heavy-duty HD leg guard',
+  },
+  {
+    id: 'side',
+    label: 'SIDE PROFILE',
+    deg: 90,
+    image: '/images/fatbob/IMG_0062.jpg',
+    description: 'Full right-side profile showing slotted disc wheel, Vance & Hines exhaust & dual rear suspension',
+  },
+  {
+    id: 'rear',
+    label: 'REAR PROFILE',
+    deg: 315,
+    image: '/images/fatbob/IMG_0052.jpg',
+    description: 'Muscular rear view showing wide rear rubber, dual short shot pipes & drag handlebars',
+  },
+];
+
+const FATBOB_HOTSPOTS = [
+  {
+    id: 'vh-shortshots',
+    angleId: 'side',
+    top: '65%',
+    left: '80%',
+    title: 'Vance & Hines Shortshots',
+    detail: 'Matte black Shortshots Staggered full exhaust system with chrome slash-cut tips for legendary American twin rumble.',
+  },
+  {
+    id: 'hd-leg-guard',
+    angleId: 'front',
+    top: '56%',
+    left: '28%',
+    title: 'HD Engine Leg Guard',
+    detail: 'Genuine Harley-Davidson heavy-duty black crash guard offering vital powertrain and leg protection.',
+  },
+  {
+    id: 'twin-headlamps',
+    angleId: 'front',
+    top: '28%',
+    left: '52%',
+    title: 'Dual Chrome Bullet Headlights',
+    detail: 'Iconic signature Fat Bob twin headlamps providing high-illumination night beam and unmistakable road stance.',
+  },
+  {
+    id: 'aftermarket-grips',
     angleId: 'front34',
-    top: '68%',
+    top: '26%',
+    left: '70%',
+    title: 'Custom Hand Grips',
+    detail: 'High-grade aftermarket diamond knurled grips delivering superior tactile ergonomics and feedback.',
+  },
+  {
+    id: 'keyless-fob',
+    angleId: 'rear',
+    top: '38%',
     left: '60%',
-    title: 'M Radial 4-Piston Calipers',
-    detail: 'Forged blue anodized monoblock calipers clamping dual 320mm floating discs.',
+    title: 'Smart Keyless Operating System',
+    detail: 'Factory Harley-Davidson hands-free proximity keyless ignition system with auto-arming security.',
+  },
+];
+
+const HAYABUSA_ANGLES: CameraAngle[] = [
+  {
+    id: 'front34',
+    label: 'FRONT 3/4 AERO',
+    deg: 0,
+    image: '/images/hayabusa/IMG_0001.jpg',
+    description: 'Pearl White aerodynamic stance — signature Kanji graphic, carbon hydrodipped fender & Brembo Stylema calipers',
+  },
+  {
+    id: 'front',
+    label: 'RAM-AIR FRONT',
+    deg: 45,
+    image: '/images/hayabusa/IMG_0010.jpg',
+    description: 'Aggressive front fascia with stacked LED projector beam, integrated ram-air vents & Fancy Rides plate',
+  },
+  {
+    id: 'side',
+    label: 'HYPERBIKE PROFILE',
+    deg: 90,
+    image: '/images/hayabusa/IMG_0003.jpg',
+    description: 'Full landscape side profile showing M4 US-imported full exhaust, carbon frame covers & aerodynamic tail cowl',
+  },
+  {
+    id: 'rear',
+    label: 'REAR / TAIL COWL',
+    deg: 315,
+    image: '/images/hayabusa/IMG_0006.jpg',
+    description: 'Muscular rear view showing illuminated twin LED taillights, single-seat aerodynamic hump & wide Battlax tyre',
+  },
+];
+
+const HAYABUSA_HOTSPOTS = [
+  {
+    id: 'm4-exhaust',
+    angleId: 'side',
+    top: '72%',
+    left: '38%',
+    title: 'M4 US Full System Exhaust',
+    detail: 'Imported US-spec M4 full performance exhaust system worth ₹3 Lakhs, delivering weight reduction and a screaming inline-4 roar.',
+  },
+  {
+    id: 'brembo-stylema',
+    angleId: 'front34',
+    top: '74%',
+    left: '52%',
+    title: 'Brembo Stylema Calipers',
+    detail: 'Top-of-the-line Brembo Stylema 4-piston radial monobloc calipers with dual 320mm floating discs and Motion Track ABS.',
+  },
+  {
+    id: 'hydrodipped-carbon',
+    angleId: 'front34',
+    top: '58%',
+    left: '58%',
+    title: 'Hydrodipped Carbon Aero (₹1.5L Value)',
+    detail: 'Premium high-gloss carbon-weave hydrodipped fairing vents, front fender, intake ducts, and frame covers.',
+  },
+  {
+    id: 'rg-protector',
+    angleId: 'front34',
+    top: '48%',
+    left: '34%',
+    title: 'R&G Performance Leg Guard / Sliders',
+    detail: 'R&G aerodynamic frame protectors and leg guards safeguarding engine cases and immaculate fairings.',
+  },
+  {
+    id: 'sirs-electronics',
+    angleId: 'front',
+    top: '25%',
+    left: '49%',
+    title: 'S.I.R.S. Suite & Quickshifter',
+    detail: 'Suzuki Intelligent Ride System with 6-axis IMU, bi-directional quickshifter, 10-mode traction control & launch control.',
   },
 ];
 
 export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, brand }) => {
+  const isHayabusa = modelName.toUpperCase().includes('HAYABUSA') || brand.toUpperCase().includes('SUZUKI');
+  const isFatBob = modelName.toUpperCase().includes('FAT') || modelName.toUpperCase().includes('DYNA');
+  const isHarley = brand.toUpperCase().includes('HARLEY') || modelName.toUpperCase().includes('FORTY');
+  const cameraAngles = isHayabusa ? HAYABUSA_ANGLES : isFatBob ? FATBOB_ANGLES : isHarley ? HARLEY_ANGLES : INTERCEPTOR_ANGLES;
+  const hotspots = isHayabusa ? HAYABUSA_HOTSPOTS : isFatBob ? FATBOB_HOTSPOTS : isHarley ? HARLEY_HOTSPOTS : INTERCEPTOR_HOTSPOTS;
+
   const [currentDeg, setCurrentDeg] = useState<number>(45);
   const [isAutoRotating, setIsAutoRotating] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -97,10 +325,10 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
   const getClosestAngle = useCallback((deg: number): CameraAngle => {
     const normalized = ((deg % 360) + 360) % 360;
     
-    let closest = CAMERA_ANGLES[0];
+    let closest = cameraAngles[0];
     let minDiff = 360;
 
-    CAMERA_ANGLES.forEach((angle) => {
+    cameraAngles.forEach((angle) => {
       let diff = Math.abs(normalized - angle.deg);
       if (diff > 180) diff = 360 - diff;
       if (diff < minDiff) {
@@ -110,7 +338,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
     });
 
     return closest;
-  }, []);
+  }, [cameraAngles]);
 
   const activeAngle = getClosestAngle(currentDeg);
 
@@ -182,11 +410,11 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
   const handleRotateStep = (direction: 'left' | 'right') => {
     setIsAutoRotating(false);
     // Find current index and cycle
-    const currentIndex = CAMERA_ANGLES.findIndex((a) => a.id === activeAngle.id);
+    const currentIndex = cameraAngles.findIndex((a) => a.id === activeAngle.id);
     let nextIndex = direction === 'right' ? currentIndex + 1 : currentIndex - 1;
-    if (nextIndex >= CAMERA_ANGLES.length) nextIndex = 0;
-    if (nextIndex < 0) nextIndex = CAMERA_ANGLES.length - 1;
-    setCurrentDeg(CAMERA_ANGLES[nextIndex].deg);
+    if (nextIndex >= cameraAngles.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = cameraAngles.length - 1;
+    setCurrentDeg(cameraAngles[nextIndex].deg);
   };
 
   // Subtle interactive 3D perspective tilt during drag
@@ -253,24 +481,27 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             />
             <span
               style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                letterSpacing: '0.14em',
+                fontFamily: 'var(--font-heading)',
+                fontSize: '0.68rem',
+                fontWeight: 500,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
                 color: 'var(--accent-orange)',
               }}
             >
-              360° INTERACTIVE TURNTABLE
+              360° Interactive Turntable
             </span>
           </div>
 
           <h3
             style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '1.35rem',
-              fontWeight: 800,
+              fontFamily: 'var(--font-display)',
+              fontSize: '1.75rem',
+              fontWeight: 400,
+              fontStyle: 'italic',
               color: '#F5F5F2',
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.01em',
+              lineHeight: 1.1,
               margin: 0,
             }}
           >
@@ -296,7 +527,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
               color={isAutoRotating ? 'var(--accent-orange)' : 'currentColor'}
               style={{ animation: isAutoRotating ? 'spin 5s linear infinite' : 'none' }}
             />
-            <span>{isAutoRotating ? 'ROTATING 360°' : 'AUTO-ROTATE'}</span>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.78rem', fontWeight: 400, letterSpacing: '0.08em' }}>{isAutoRotating ? 'Rotating 360°' : 'Auto-rotate'}</span>
           </button>
 
           {/* Lighting Mode Toggle */}
@@ -306,7 +537,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             title="Toggle Studio Keylight"
           >
             <Sparkles size={12} color={studioLight === 'focused' ? 'var(--accent-orange)' : '#888'} />
-            <span>{studioLight === 'focused' ? 'KEYLIGHT ON' : 'AMBIENT'}</span>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.78rem', fontWeight: 400, letterSpacing: '0.08em' }}>{studioLight === 'focused' ? 'Keylight on' : 'Ambient'}</span>
           </button>
         </div>
       </div>
@@ -324,10 +555,11 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: '16/9',
+          aspectRatio: '4 / 3',
+          minHeight: '440px',
           borderRadius: '14px',
           overflow: 'hidden',
-          background: '#040404',
+          background: 'radial-gradient(ellipse at center, #181818 0%, #050505 100%)',
           border: '1px solid rgba(255, 255, 255, 0.08)',
           cursor: isDragging ? 'grabbing' : 'grab',
           userSelect: 'none',
@@ -342,6 +574,9 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             transform: `rotateY(${tiltY}deg)`,
             transition: isDragging ? 'none' : 'transform 0.3s ease, opacity 0.25s ease',
             position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <img
@@ -351,9 +586,10 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: 'contain',
               objectPosition: 'center',
               pointerEvents: 'none',
+              padding: '12px',
             }}
           />
         </div>
@@ -422,19 +658,21 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
               background: 'rgba(10, 10, 10, 0.85)',
               border: '1px solid rgba(255, 255, 255, 0.12)',
               backdropFilter: 'blur(8px)',
-              padding: '0.35rem 0.75rem',
+              padding: '0.35rem 0.85rem',
               borderRadius: '999px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.45rem',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.68rem',
+              fontFamily: 'var(--font-heading)',
+              fontSize: '0.72rem',
+              fontWeight: 400,
+              letterSpacing: '0.08em',
               color: '#B0B0B0',
               pointerEvents: 'none',
             }}
           >
             <Compass size={11} color="var(--accent-orange)" />
-            <span>DRAG TO ROTATE 360°</span>
+            <span>Drag to rotate</span>
           </div>
         )}
 
@@ -447,13 +685,14 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             background: 'rgba(10, 10, 10, 0.88)',
             border: '1px solid rgba(255, 255, 255, 0.12)',
             backdropFilter: 'blur(10px)',
-            padding: '0.4rem 0.85rem',
+            padding: '0.4rem 0.9rem',
             borderRadius: '10px',
             display: 'flex',
             alignItems: 'center',
             gap: '0.65rem',
-            fontFamily: 'var(--font-mono)',
+            fontFamily: 'var(--font-heading)',
             fontSize: '0.72rem',
+            fontWeight: 400,
             boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)',
             pointerEvents: 'none',
           }}
@@ -463,17 +702,17 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             color="var(--accent-orange)"
             style={{ animation: isAutoRotating ? 'spin 4s linear infinite' : 'none' }}
           />
-          <span style={{ color: '#F5F5F2', fontWeight: 700, letterSpacing: '0.06em' }}>
-            360° VIEW
+          <span style={{ color: '#F5F5F2', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: '0.68rem' }}>
+            360° View
           </span>
           <span style={{ color: '#555' }}>|</span>
-          <span style={{ color: 'var(--accent-orange)', fontWeight: 600 }}>
+          <span style={{ color: 'var(--accent-orange)', fontWeight: 500, fontSize: '0.68rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             {activeAngle.label}
           </span>
         </div>
 
         {/* Interactive Feature Hotspot Dots */}
-        {HOTSPOTS.filter((h) => h.angleId === activeAngle.id).map((hotspot) => {
+        {hotspots.filter((h) => h.angleId === activeAngle.id).map((hotspot) => {
           const isSelected = activeHotspot === hotspot.id;
           return (
             <div
@@ -527,7 +766,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                    <strong style={{ fontFamily: 'var(--font-heading)', fontSize: '0.88rem', color: '#F5F5F2' }}>
+                    <strong style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontStyle: 'italic', fontSize: '1rem', color: '#F5F5F2', letterSpacing: '0em', lineHeight: 1.2 }}>
                       {hotspot.title}
                     </strong>
                     <button
@@ -537,7 +776,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
                       ✕
                     </button>
                   </div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#B0B0B0', lineHeight: 1.45, margin: 0 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.72rem', fontWeight: 400, color: '#B0B0B0', lineHeight: 1.6, margin: 0, letterSpacing: '0.01em' }}>
                     {hotspot.detail}
                   </p>
                 </div>
@@ -572,7 +811,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             title="Rotate Left"
           >
             <ChevronLeft size={14} />
-            <span style={{ fontSize: '0.72rem', letterSpacing: '0.08em' }}>ROTATE</span>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.72rem', fontWeight: 400, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Rotate</span>
           </button>
 
           {/* Perspective View Selectors without degree numbers */}
@@ -586,7 +825,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
               flexWrap: 'wrap',
             }}
           >
-            {CAMERA_ANGLES.map((angle) => {
+            {cameraAngles.map((angle) => {
               const isActive = activeAngle.id === angle.id;
               return (
                 <button
@@ -611,7 +850,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
                     boxShadow: isActive ? '0 0 15px rgba(255, 90, 31, 0.15)' : 'none',
                   }}
                 >
-                  <span style={{ color: isActive ? 'var(--accent-orange)' : '#888' }}>
+                  <span style={{ color: isActive ? 'var(--accent-orange)' : '#888', fontFamily: 'var(--font-heading)', fontSize: '0.68rem', fontWeight: isActive ? 500 : 400, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                     {angle.label}
                   </span>
                 </button>
@@ -632,7 +871,7 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
             }}
             title="Rotate Right"
           >
-            <span style={{ fontSize: '0.72rem', letterSpacing: '0.08em' }}>ROTATE</span>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.72rem', fontWeight: 400, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Rotate</span>
             <ChevronRight size={14} />
           </button>
         </div>
@@ -654,14 +893,15 @@ export const Machine360Viewer: React.FC<Machine360ViewerProps> = ({ modelName, b
           <RotateCcw size={11} color="var(--accent-orange)" />
           <span
             style={{
-              fontFamily: 'var(--font-mono)',
+              fontFamily: 'var(--font-heading)',
               fontSize: '0.65rem',
+              fontWeight: 400,
               color: 'var(--text-muted)',
-              letterSpacing: '0.12em',
+              letterSpacing: '0.14em',
               textTransform: 'uppercase',
             }}
           >
-            Drag anywhere horizontally on machine to rotate 360°
+            Drag anywhere on machine to rotate 360°
           </span>
           <RotateCw size={11} color="var(--accent-orange)" />
         </div>

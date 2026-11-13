@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw Camera Files & SD card dump folders
+*.cr2
+*.CR2
+public/images/HD 48/
+public/images/HD fatbob/
+
+
