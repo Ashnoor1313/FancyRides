@@ -247,7 +247,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ motorcycle, isOpen, 
               APPOINTMENT SECURED
             </h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '420px', margin: '0 auto 1.75rem', lineHeight: 1.6 }}>
-              Thank you, {name}. A dedicated Fancy Rides Private Client Concierge has been assigned to prepare the {motorcycle.brand} {motorcycle.model} for your session.
+              Thank you, {name}. A dedicated Fancy Rides India Private Client Concierge has been assigned to prepare the {motorcycle.brand} {motorcycle.model} for your session.
             </p>
 
             <button

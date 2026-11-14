@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MOTORCYCLES } from '../data/motorcycles';
 import { MotorcycleCard } from '../components/MotorcycleCard';
-import { HeadlightAtmosphereBackdrop } from '../components/HeadlightAtmosphereBackdrop';
 import {
   ArrowRight,
   ChevronLeft,
@@ -18,62 +17,62 @@ interface HomePageProps {
   onOpenSellModal: () => void;
 }
 
-// 5 Sample Motorcycles for Hero Fullscreen Carousel (Section 01)
+// 5 Hero Slides showcasing both certified machines (Section 01)
 const HERO_SLIDES = [
   {
     slideNumber: '01 / 05',
-    brand: 'DUCATI',
-    model: 'PANIGALE V2',
-    subtitle: 'BAYLISS 20TH ANNIVERSARY',
-    hp: 155,
-    cc: 955,
-    kg: 197,
-    image: 'https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=2000&auto=format&fit=crop',
-    machineId: 'ducati-panigale-v2-bayliss-2022',
+    brand: 'SUZUKI',
+    model: 'HAYABUSA GEN 3',
+    subtitle: 'M4 US FULL SYSTEM · 1340CC INLINE-4 · 190 HP',
+    hp: 190,
+    cc: 1340,
+    kg: 260,
+    image: '/images/hayabusa/IMG_0001.jpg',
+    machineId: 'suzuki-hayabusa-gen-3-2023',
   },
   {
     slideNumber: '02 / 05',
-    brand: 'BMW MOTORRAD',
-    model: 'S 1000 RR',
-    subtitle: 'M PACKAGE CARBON EDITION',
-    hp: 207,
-    cc: 999,
-    kg: 193,
-    image: '/images/bmw-s1000rr-hero.jpg',
-    machineId: 'bmw-s1000rr-m-2023',
+    brand: 'HARLEY-DAVIDSON',
+    model: 'FAT BOB DYNA',
+    subtitle: 'VANCE & HINES SHORT SHOT · 1585CC TWIN CAM 96',
+    hp: 79,
+    cc: 1585,
+    kg: 320,
+    image: '/images/fatbob/IMG_0065.jpg',
+    machineId: 'harley-davidson-fat-bob-dyna-2017',
   },
   {
     slideNumber: '03 / 05',
-    brand: 'TRIUMPH',
-    model: 'SPEED TRIPLE 1200 RS',
-    subtitle: 'CARBON & MATT SILVER ICE',
-    hp: 180,
-    cc: 1160,
-    kg: 198,
-    image: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2000&auto=format&fit=crop',
-    machineId: 'triumph-speed-triple-1200-rs-2023',
+    brand: 'HARLEY-DAVIDSON',
+    model: 'FORTY-EIGHT',
+    subtitle: 'VANCE & HINES STAGE CUSTOM · 1202CC V-TWIN',
+    hp: 66,
+    cc: 1202,
+    kg: 247,
+    image: '/images/hd48/IMG_0035.jpg',
+    machineId: 'harley-davidson-forty-eight-2018',
   },
   {
     slideNumber: '04 / 05',
-    brand: 'HARLEY-DAVIDSON',
-    model: 'FAT BOB 114',
-    subtitle: 'MILWAUKEE-EIGHT CUSTOM',
-    hp: 94,
-    cc: 1868,
-    kg: 306,
-    image: 'https://images.unsplash.com/photo-1558981420-87aa9dad1c89?q=80&w=2000&auto=format&fit=crop',
-    machineId: 'harley-davidson-fat-bob-114-2022',
+    brand: 'ROYAL ENFIELD',
+    model: 'INTERCEPTOR 650',
+    subtitle: 'HOLLYWOOD & RED ROOSTER EDITION',
+    hp: 47,
+    cc: 648,
+    kg: 202,
+    image: '/images/IMG_0195.JPG',
+    machineId: 're-interceptor-650-2021',
   },
   {
     slideNumber: '05 / 05',
-    brand: 'BMW MOTORRAD',
-    model: 'R 1300 GS',
-    subtitle: 'TRIPLE BLACK OPTION 719',
-    hp: 145,
-    cc: 1300,
-    kg: 237,
-    image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop',
-    machineId: 'bmw-r1300gs-triple-black-2024',
+    brand: 'DUCATI',
+    model: 'MONSTER 821',
+    subtitle: 'TESTASTRETTA 11° · 112 HP · 1ST DESMO DONE · DL REGD',
+    hp: 112,
+    cc: 821,
+    kg: 205,
+    image: '/images/ducati/IMG_0019.jpg',
+    machineId: 'ducati-monster-821-2015',
   },
 ];
 
@@ -95,7 +94,7 @@ const CATEGORY_ITEMS = [
     number: '03',
     name: 'SUPERBIKE',
     tagline: 'Built for adrenaline.',
-    image: 'https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/hayabusa/IMG_0001.jpg',
   },
   {
     number: '04',
@@ -171,7 +170,7 @@ const BRAND_DATA = [
     name: 'SUZUKI',
     origin: 'HAMAMATSU, JAPAN',
     tag: 'LEGENDARY GSX HERITAGE',
-    bg: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop',
+    bg: '/images/hayabusa/IMG_0003.jpg',
   },
   {
     name: 'HONDA',
@@ -187,8 +186,8 @@ const INSPECTION_PINS = [
     id: 'engine',
     label: 'ENGINE',
     sub: 'Powertrain & ShiftCam VVT',
-    x: 49,
-    y: 57,
+    x: 48,
+    y: 69,
     score: '98/100 · EXCELLENT',
     systemTitle: '999CC SHIFTCAM INLINE-4 POWERTRAIN',
     summary: 'Full cylinder endoscope audit completed. All 4 bores exhibit pristine factory cross-hatching with zero blow-by or oil seepage.',
@@ -204,8 +203,8 @@ const INSPECTION_PINS = [
     id: 'brakes',
     label: 'BRAKES',
     sub: 'Brembo Stylema Calipers',
-    x: 23,
-    y: 69,
+    x: 71,
+    y: 76,
     score: '92% INTEGRITY · PASS',
     systemTitle: 'BREMBO STYLEMA 320MM BRAKING ARCHITECTURE',
     summary: 'Brembo Stylema monobloc calipers with Bosch Cornering ABS Pro. Rotors laser-gauged with zero thermal runout.',
@@ -221,7 +220,7 @@ const INSPECTION_PINS = [
     id: 'tyres',
     label: 'TYRES',
     sub: 'Pirelli Diablo Supercorsa',
-    x: 77,
+    x: 33,
     y: 72,
     score: '90% TREAD · PASS',
     systemTitle: 'PIRELLI DIABLO SUPERCORSA SP V3',
@@ -238,8 +237,8 @@ const INSPECTION_PINS = [
     id: 'body',
     label: 'CHASSIS',
     sub: 'Laser Alignment 0.1mm',
-    x: 52,
-    y: 35,
+    x: 56,
+    y: 39,
     score: '0.1MM TOLERANCE · PASS',
     systemTitle: 'ALUMINIUM BRIDGE FRAME & M CARBON',
     summary: 'Scheibner CMS laser chassis alignment verified. Headstock angle and swingarm pivot verified 100% factory true.',
@@ -255,8 +254,8 @@ const INSPECTION_PINS = [
     id: 'history',
     label: 'PROVENANCE',
     sub: 'Vahan Verified Zero Hypothecation',
-    x: 35,
-    y: 28,
+    x: 41,
+    y: 43,
     score: '100% CLEAR TITLE',
     systemTitle: 'GOVERNMENT VAHAN & LEGAL AUDIT',
     summary: 'Direct government Vahan national registry scan completed. Single-owner private registration with verified smartcard.',
@@ -266,14 +265,14 @@ const INSPECTION_PINS = [
       { label: 'Crime Bureau Check', value: '100% Clean / 0 Pending Challans' },
       { label: 'Insurance Cover', value: 'Zero Depreciation Active till Nov 2026' },
     ],
-    tolerance: 'Title Guaranteed by Fancy Rides',
+    tolerance: 'Title Guaranteed by Fancy Rides India',
   },
   {
     id: 'service',
     label: 'SERVICE',
     sub: 'Dealer Digital Log',
-    x: 65,
-    y: 48,
+    x: 62,
+    y: 51,
     score: 'VERIFIED DIGITAL LOG',
     systemTitle: 'OFFICIAL BMW MOTORRAD SERVICE ARCHIVE',
     summary: 'All periodic service visits completed exclusively at authorized master workshops with electronic stamping.',
@@ -446,7 +445,19 @@ export const HomePage: React.FC<HomePageProps> = ({
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(180deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.05) 35%, rgba(5,5,5,0.5) 75%, #050505 100%)',
+              'linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.18) 32%, rgba(5,5,5,0.55) 75%, #050505 100%)',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Directional Vignette for Left Typography Contrast */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(90deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.6) 38%, rgba(5,5,5,0.15) 65%, transparent 100%)',
             zIndex: 1,
             pointerEvents: 'none',
           }}
@@ -457,7 +468,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             position: 'absolute',
             inset: 0,
             background:
-              'radial-gradient(circle at 20% 70%, rgba(255, 90, 31, 0.04) 0%, transparent 55%)',
+              'radial-gradient(circle at 20% 70%, rgba(255, 90, 31, 0.05) 0%, transparent 55%)',
             zIndex: 1,
             pointerEvents: 'none',
           }}
@@ -466,13 +477,42 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Hero Content Container */}
         <div className="container-wide" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
           
-          {/* Technical Label (FANCY RIDES / COLLECTION 01) */}
+          {/* Technical Label (FANCY RIDES INDIA / COLLECTION 01) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
-            <span className="telemetry-badge accent">
-              <span className="dot" /> FANCY RIDES / COLLECTION 01
+            <span
+              className="telemetry-badge accent"
+              style={{
+                background: 'rgba(12, 10, 8, 0.9)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255, 90, 31, 0.55)',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.65), 0 0 12px rgba(255, 90, 31, 0.15)',
+              }}
+            >
+              <span className="dot" /> FANCY RIDES INDIA / COLLECTION 01
             </span>
-            <span className="telemetry-badge">
-              {currentHero.brand} · {currentHero.subtitle}
+            <span
+              className="telemetry-badge"
+              style={{
+                background: 'rgba(10, 10, 10, 0.88)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255, 255, 255, 0.22)',
+                color: '#F2F2EE',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.65)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+              }}
+            >
+              <span style={{ color: 'var(--accent-orange)', fontWeight: 700, letterSpacing: '0.14em' }}>
+                {currentHero.brand}
+              </span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.35)', margin: '0 0.1rem' }}>·</span>
+              <span style={{ color: '#E8E8E4', fontWeight: 500 }}>
+                {currentHero.subtitle}
+              </span>
             </span>
           </div>
 
@@ -496,21 +536,23 @@ export const HomePage: React.FC<HomePageProps> = ({
                   textTransform: 'uppercase',
                   marginBottom: '1.5rem',
                   color: '#F5F5F2',
+                  textShadow: '0 4px 24px rgba(0, 0, 0, 0.75)',
                 }}
               >
                 MACHINES <br />
                 THAT MOVE <br />
-                <span style={{ color: '#9B9B9B' }}>YOU.</span>
+                <span style={{ color: '#BDBDB8', textShadow: '0 4px 24px rgba(0, 0, 0, 0.75)' }}>YOU.</span>
               </h1>
 
               {/* Small Supporting Copy */}
               <p
                 style={{
-                  color: '#9B9B9B',
+                  color: '#D4D4CE',
                   fontSize: 'clamp(0.95rem, 1.3vw, 1.12rem)',
                   lineHeight: 1.6,
                   maxWidth: '520px',
                   marginBottom: '2rem',
+                  textShadow: '0 2px 14px rgba(0, 0, 0, 0.7)',
                 }}
               >
                 A curated collection of exceptional pre-owned motorcycles. Sourced with surgical scrutiny, certified across 150+ forensic engineering checkpoints.
@@ -1188,7 +1230,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ==================================================
-          SECTION 07 — WHY FANCY RIDES (4 EDITORIAL FEATURE CARDS)
+          SECTION 07 — WHY FANCY RIDES INDIA (4 EDITORIAL FEATURE CARDS)
          ================================================== */}
       <section style={{ padding: 'clamp(5rem, 9vw, 9rem) 0', position: 'relative' }}>
         <div className="container-wide">
@@ -1309,17 +1351,6 @@ export const HomePage: React.FC<HomePageProps> = ({
             ))}
           </div>
         </div>
-      </section>
-
-      {/* ==================================================
-          CINEMATIC BMW S1000RR HEADLIGHT ATMOSPHERE SHOWCASE
-         ================================================== */}
-      <section style={{ margin: '0' }}>
-        <HeadlightAtmosphereBackdrop
-          title="THE SHADOW PREDATOR"
-          subtitle="BMW S 1000 RR // TWIN LASER HEADLIGHT OPTIC MATRIX & AERODYNAMIC M CHASSIS"
-          showControls={true}
-        />
       </section>
 
       {/* ==================================================
@@ -1817,7 +1848,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   marginBottom: '0.2rem',
                 }}
               >
-                BMW MOTORRAD
+                ROYAL ENFIELD
               </div>
 
               <h2
@@ -1830,7 +1861,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   color: '#F5F5F2',
                 }}
               >
-                S 1000 RR
+                INTERCEPTOR 650
               </h2>
 
               {/* Editorial Specification Numbers (Without Clunky Boxes) */}
@@ -1847,7 +1878,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               >
                 <div>
                   <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', fontWeight: 800, color: '#F5F5F2' }}>
-                    193
+                    47
                   </div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#9B9B9B', letterSpacing: '0.1em' }}>
                     HP
@@ -1856,7 +1887,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div>
                   <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', fontWeight: 800, color: '#F5F5F2' }}>
-                    999
+                    648
                   </div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#9B9B9B', letterSpacing: '0.1em' }}>
                     CC
@@ -1865,7 +1896,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div>
                   <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', fontWeight: 800, color: '#F5F5F2' }}>
-                    110
+                    52
                   </div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#9B9B9B', letterSpacing: '0.1em' }}>
                     NM
@@ -1873,7 +1904,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              {/* Metadata: 2023 · 8,400 KM · 1ST OWNER */}
+              {/* Metadata: 2021 · 7,000 KM · 1ST OWNER */}
               <div
                 style={{
                   display: 'flex',
@@ -1885,16 +1916,16 @@ export const HomePage: React.FC<HomePageProps> = ({
                   marginBottom: '1.75rem',
                 }}
               >
-                <span>2023</span>
+                <span>2021</span>
                 <span style={{ opacity: 0.35 }}>·</span>
-                <span>8,400 KM</span>
+                <span>7,000 KM</span>
                 <span style={{ opacity: 0.35 }}>·</span>
                 <span style={{ color: '#F5F5F2' }}>1ST OWNER</span>
                 <span style={{ opacity: 0.35 }}>·</span>
-                <span>DELHI NCR</span>
+                <span>PUNJAB</span>
               </div>
 
-              {/* Price: ₹18.75 L (Restrained, Not in a coloured badge) & Special CTA */}
+              {/* Price: ₹2.39 L & Special CTA */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.5rem' }}>
                 <div>
                   <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', display: 'block' }}>
@@ -1911,13 +1942,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                       marginTop: '0.2rem',
                     }}
                   >
-                    ₹18.75 L
+                    ₹2.39 L
                   </div>
                 </div>
 
                 {/* Special CTA Button: Dark charcoal with small orange circular icon area on the right */}
                 <button
-                  onClick={() => onNavigate('detail', { machineId: 'bmw-s1000rr-m-2023' })}
+                  onClick={() => onNavigate('detail', { machineId: 're-interceptor-650-2021' })}
                   className="btn-special-cta"
                   data-cursor="INSPECT"
                 >
@@ -1934,18 +1965,21 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div
                 style={{
                   width: '100%',
-                  aspectRatio: '16 / 11',
-                  background: '#090909',
+                  aspectRatio: '4 / 3',
+                  background: 'radial-gradient(ellipse at center, #181818 0%, #060606 100%)',
                   border: '1px solid var(--border-card)',
                   borderRadius: 'var(--radius-card)',
                   overflow: 'hidden',
                   position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <img
-                  src="/images/bmw-s1000rr-hero.jpg"
-                  alt="BMW S 1000 RR Featured Machine"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  src="/images/IMG_0195.JPG"
+                  alt="Royal Enfield Interceptor 650 Featured Machine"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '10px' }}
                 />
 
                 <div
@@ -1962,7 +1996,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     color: '#9B9B9B',
                   }}
                 >
-                  [TELEMETRY: AKRAPOVIČ / M CARBON WHEELS]
+                  [TELEMETRY: RED ROOSTER EXHAUST / HOLLYWOOD BARS]
                 </div>
               </div>
             </div>

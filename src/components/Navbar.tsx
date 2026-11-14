@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <div
               style={{
-                width: '32px',
+                width: '34px',
                 height: '32px',
                 background: '#161616',
                 border: '1px solid rgba(255, 255, 255, 0.12)',
@@ -74,14 +74,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 justifyContent: 'center',
                 fontWeight: 800,
                 color: '#F5F5F2',
-                fontSize: '0.82rem',
+                fontSize: '0.78rem',
                 fontFamily: 'var(--font-mono)',
                 borderRadius: '8px',
                 letterSpacing: '-0.02em',
                 transition: 'border-color 0.25s ease',
               }}
             >
-              FR
+              FRI
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', lineHeight: 1 }}>
               <span
@@ -105,6 +105,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
               >
                 RIDES
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: 800,
+                  fontSize: '0.85rem',
+                  letterSpacing: '0.14em',
+                  color: 'var(--accent-orange)',
+                }}
+              >
+                INDIA
               </span>
             </div>
           </div>
@@ -295,7 +306,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', fontSize: '0.78rem', letterSpacing: '0.1em' }}>
-                [ FANCY RIDES ARCHIVE ]
+                [ FANCY RIDES INDIA ARCHIVE ]
               </span>
               <span className="telemetry-badge accent">
                 <span className="dot" /> LIVE SHOWROOM

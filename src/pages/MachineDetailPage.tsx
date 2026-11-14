@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { MOTORCYCLES } from '../data/motorcycles';
 import type { Motorcycle } from '../data/motorcycles';
 import { MotorcycleCard } from '../components/MotorcycleCard';
 import { Machine360Viewer } from '../components/Machine360Viewer';
 import { EMICalculator } from '../components/EMICalculator';
-import { HeadlightAtmosphereBackdrop } from '../components/HeadlightAtmosphereBackdrop';
 import {
   ArrowLeft,
   Heart,
@@ -29,46 +28,6 @@ interface MachineDetailPageProps {
   onOpenBooking: (motorcycle: Motorcycle) => void;
 }
 
-// 6 Curated Image Views
-const GALLERY_VIEWS = [
-  {
-    id: '01',
-    label: '01 — M Performance',
-    caption: 'Official BMW Motorsport M Performance Package & Track Stance',
-    src: '/images/bmw-s1000rr-hero.jpg',
-  },
-  {
-    id: '02',
-    label: '02 — Pit Lane High-Res',
-    caption: 'Official BMW Group Paddock Stand Architecture (2094×1500)',
-    src: '/images/bmw-s1000rr-press.jpg',
-  },
-  {
-    id: '03',
-    label: '03 — Dark Studio',
-    caption: 'Cinematic Dark Showroom Stance',
-    src: '/images/bmw-s1000rr-studio.jpg',
-  },
-  {
-    id: '04',
-    label: '04 — Cockpit',
-    caption: '6.5-Inch Full TFT Display & M Billet Levers',
-    src: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop',
-  },
-  {
-    id: '05',
-    label: '05 — Engine',
-    caption: 'BMW ShiftCam 999cc Powertrain Architecture',
-    src: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
-  },
-  {
-    id: '06',
-    label: '06 — Detail',
-    caption: 'Laser-Etched Chassis Identification & Brembo Calipers',
-    src: 'https://images.unsplash.com/photo-1558980394-4c7c9299fe96?q=80&w=2000&auto=format&fit=crop',
-  },
-];
-
 export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
   machineId,
   onBack,
@@ -77,11 +36,81 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
   onToggleFavorite,
   onOpenBooking,
 }) => {
-  // Always resolve machine, default to BMW S 1000 RR
+  // Always resolve machine, default to first available
   const motorcycle =
     MOTORCYCLES.find((m) => m.id === machineId) ||
-    MOTORCYCLES.find((m) => m.id === 'bmw-s1000rr-m-2023') ||
     MOTORCYCLES[0];
+
+  const galleryViews = useMemo(() => {
+    if (motorcycle.images && motorcycle.images.length > 0) {
+      const interceptorCaptions: Record<number, string> = {
+        0: 'Front 3/4 Stance',
+        1: 'Right Profile & Red Rooster Exhaust',
+        2: 'Direct Front Stance & Hollywood Bars',
+        3: 'Red Rooster Performance Exhaust Pipe',
+        4: 'Polished Dual Chrome Exhaust Canisters',
+        5: '648cc Parallel-Twin Engine Architecture',
+        6: 'Hollywood Custom Wide Handlebars',
+        7: 'Classic Twin Dial Cockpit & Switchgear',
+        8: 'Front Brembo/ByBre Disc & Fork Stance',
+        9: 'Rear 3/4 Angle & 4-Way Hazard Flasher',
+        10: 'Fresh Rear Tyre Tread Profile',
+        11: 'Orange & Black Teardrop Fuel Tank',
+      };
+      const hd48Captions: Record<number, string> = {
+        0: 'Front 3/4 Stance & Vivid Yellow Peanut Tank',
+        1: 'Low Ground Stance & Fat Front Shinko Tyre',
+        2: 'Full Side Profile & Vance & Hines Pipes',
+        3: 'Rear Stance, Pillion Seat & Side Mount Plate',
+        4: 'Direct Front View & Custom Headlamp Grill',
+        5: 'Bobber Cockpit & Aftermarket Hand Grips',
+        6: 'Rear Wheel & Vance & Hines Exhaust Detail',
+        7: '1202cc Evolution Engine & Chrome Guard',
+        8: 'Peanut Fuel Tank Detail',
+        9: 'Powertrain Close-Up & Oil Tank',
+        10: 'Road Presence & Low Slung Stance',
+      };
+      const fatbobCaptions: Record<number, string> = {
+        0: 'Hero Three-Quarter Stance & Signature Dual Headlamps',
+        1: 'Direct Front View with Fancy Rides India Plaque',
+        2: 'Muscular Rear 3/4 Profile & Vance & Hines Shortshots',
+        3: 'Side Profile, Dual Shocks & Black Slotted Wheels',
+        4: 'Cockpit View, Drag Bar & Dual Fuel Tank Console',
+        5: 'Vance & Hines Badge & Slash-Cut Performance Exhaust',
+      };
+      const hayabusaCaptions: Record<number, string> = {
+        0: 'Hero Three-Quarter Stance & Carbon Hydrodipped Front Aero',
+        1: 'Full Aerodynamic Side Profile & US-Imported M4 Full System',
+        2: 'Rear Three-Quarter Stance with Illuminated LED Taillights',
+        3: 'Aggressive Front Fascia with Ram-Air Ducts & Fancy Rides India Plaque',
+        4: 'M4 US-Imported Performance Full System Exhaust Canister (₹3L)',
+        5: 'Brembo Stylema Radial Monobloc Caliper & 320mm Floating Disc',
+        6: 'Cockpit View, Clip-Ons, S.I.R.S. TFT Display & 3D Tank Pad',
+        7: 'Aerodynamic Tail Cowl, Swingarm & Battlax S22 Rear Tyre',
+        8: 'Side Fairing Profile, R&G Frame Slider & Kanji Aerodynamics',
+        9: 'Rear High Perspective, Aerodynamic Single-Seat Cowl & Tank Grips',
+        10: 'Overhead Birdseye View of Sculpted 20L Fuel Tank & Cockpit',
+        11: 'Signature Hayabusa Kanji Graphic & Carbon-Weave Fairing Intake',
+        12: 'High Three-Quarter Stance Showing Factory Untouched Condition',
+      };
+      const angleCaptions = motorcycle.id.includes('hayabusa')
+        ? hayabusaCaptions
+        : motorcycle.id.includes('fat-bob')
+        ? fatbobCaptions
+        : motorcycle.id.includes('forty-eight')
+        ? hd48Captions
+        : interceptorCaptions;
+      return motorcycle.images.map((src, i) => ({
+        id: String(i + 1).padStart(2, '0'),
+        label: `${String(i + 1).padStart(2, '0')} — ${angleCaptions[i] || 'Inspection View'}`,
+        caption: angleCaptions[i] || `Forensic Archive Image #${i + 1}`,
+        src,
+      }));
+    }
+    return [
+      { id: '01', label: '01 — Hero Stance', caption: 'Front Three Quarter Profile', src: '/images/IMG_0195.JPG' }
+    ];
+  }, [motorcycle]);
 
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number>(0);
   const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
@@ -143,11 +172,11 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
 
   // Gallery Navigation controls
   const nextGalleryImage = () => {
-    setActiveGalleryIndex((prev) => (prev + 1) % GALLERY_VIEWS.length);
+    setActiveGalleryIndex((prev) => (prev + 1) % galleryViews.length);
   };
 
   const prevGalleryImage = () => {
-    setActiveGalleryIndex((prev) => (prev - 1 + GALLERY_VIEWS.length) % GALLERY_VIEWS.length);
+    setActiveGalleryIndex((prev) => (prev - 1 + galleryViews.length) % galleryViews.length);
   };
 
   // Related machines (3 machines)
@@ -159,8 +188,8 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
     if (navigator.share) {
       navigator
         .share({
-          title: `${motorcycle.brand} ${motorcycle.model} | Fancy Rides`,
-          text: `Explore this verified ${motorcycle.year} ${motorcycle.brand} ${motorcycle.model} on Fancy Rides.`,
+          title: `${motorcycle.brand} ${motorcycle.model} | Fancy Rides India`,
+          text: `Explore this verified ${motorcycle.year} ${motorcycle.brand} ${motorcycle.model} on Fancy Rides India.`,
           url: window.location.href,
         })
         .catch(() => {});
@@ -199,12 +228,12 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
           onClick={() => setLightboxOpen(false)}
         >
           <img
-            src={GALLERY_VIEWS[activeGalleryIndex].src}
-            alt={GALLERY_VIEWS[activeGalleryIndex].caption}
+            src={galleryViews[activeGalleryIndex]?.src || motorcycle.images[0]}
+            alt={galleryViews[activeGalleryIndex]?.caption || motorcycle.model}
             style={{ maxWidth: '92vw', maxHeight: '82vh', objectFit: 'contain', borderRadius: '16px', boxShadow: '0 20px 60px rgba(0,0,0,0.9)' }}
           />
           <div style={{ marginTop: '1.25rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-            {GALLERY_VIEWS[activeGalleryIndex].label} — {GALLERY_VIEWS[activeGalleryIndex].caption}
+            {galleryViews[activeGalleryIndex]?.label} — {galleryViews[activeGalleryIndex]?.caption}
           </div>
           <button
             onClick={() => setLightboxOpen(false)}
@@ -242,7 +271,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             <span className="telemetry-badge accent">
-              <span className="dot" /> STOCK ID: FR-001-BM
+              <span className="dot" /> STOCK ID: {motorcycle.id.includes('hayabusa') ? 'FR-004-SZ' : motorcycle.id.includes('fat-bob') ? 'FR-003-HD' : motorcycle.id.includes('forty-eight') ? 'FR-002-HD' : 'FR-001-RE'}
             </span>
             <button
               onClick={handleShare}
@@ -291,26 +320,32 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               <div
                 style={{
                   width: '100%',
-                  aspectRatio: '16 / 11',
-                  background: 'var(--bg-surface)',
+                  aspectRatio: '4 / 3',
+                  maxHeight: '620px',
+                  background: 'radial-gradient(ellipse at center, #181818 0%, #060606 100%)',
                   border: '1px solid var(--border-card)',
                   borderRadius: 'var(--radius-card)',
                   overflow: 'hidden',
                   position: 'relative',
                   boxShadow: '0 25px 60px rgba(0,0,0,0.85)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <img
-                  src={GALLERY_VIEWS[0].src}
+                  src={galleryViews[0]?.src || motorcycle.images[0]}
                   alt={`${motorcycle.brand} ${motorcycle.model}`}
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
-                    filter: 'contrast(106%) brightness(1)',
+                    objectFit: 'contain',
+                    objectPosition: 'center',
+                    padding: '8px',
+                    filter: 'contrast(104%) brightness(1)',
                     transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.035)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                 />
 
@@ -361,7 +396,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                       borderRadius: '999px',
                     }}
                   >
-                    FIRST OWNER MINT
+                    {motorcycle.ownerDisplay} · {motorcycle.condition}
                   </span>
                 </div>
 
@@ -439,7 +474,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                   marginBottom: '1.5rem',
                 }}
               >
-                A high-performance machine engineered for riders who demand pure precision. Powered by BMW ShiftCam variable valve timing.
+                {motorcycle.tagline || motorcycle.description}
               </p>
 
               {/* Price Display (Restrained Typography, Not In A Coloured Badge) */}
@@ -583,7 +618,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               </button>
 
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 800, color: '#F5F5F2' }}>
-                <span>0{activeGalleryIndex + 1}</span> / 06
+                <span>{String(activeGalleryIndex + 1).padStart(2, '0')}</span> / {String(galleryViews.length).padStart(2, '0')}
               </span>
 
               <button
@@ -601,23 +636,28 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
             style={{
               position: 'relative',
               width: '100%',
-              aspectRatio: '16 / 9',
-              maxHeight: '620px',
-              background: '#090909',
+              aspectRatio: '4 / 3',
+              maxHeight: '640px',
+              background: 'radial-gradient(ellipse at center, #181818 0%, #060606 100%)',
               border: '1px solid var(--border-card)',
               borderRadius: 'var(--radius-card)',
               overflow: 'hidden',
               marginBottom: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <img
-              src={GALLERY_VIEWS[activeGalleryIndex].src}
-              alt={GALLERY_VIEWS[activeGalleryIndex].caption}
+              src={galleryViews[activeGalleryIndex]?.src || motorcycle.images[0]}
+              alt={galleryViews[activeGalleryIndex]?.caption || motorcycle.model}
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(1) contrast(105%)',
+                objectFit: 'contain',
+                objectPosition: 'center',
+                padding: '12px',
+                filter: 'brightness(1) contrast(104%)',
                 transition: 'transform 0.4s ease, opacity 0.3s ease',
               }}
             />
@@ -639,24 +679,24 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               }}
             >
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#F5F5F2', fontWeight: 700 }}>
-                {GALLERY_VIEWS[activeGalleryIndex].label}
+                {galleryViews[activeGalleryIndex]?.label}
               </span>
               <span style={{ width: '1px', height: '12px', background: 'var(--border-subtle)' }} />
               <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                {GALLERY_VIEWS[activeGalleryIndex].caption}
+                {galleryViews[activeGalleryIndex]?.caption}
               </span>
             </div>
           </div>
 
-          {/* 6 Thumbnail Navigation Buttons */}
+          {/* Thumbnail Navigation Buttons */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(6, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
               gap: '0.75rem',
             }}
           >
-            {GALLERY_VIEWS.map((view, idx) => {
+            {galleryViews.map((view, idx) => {
               const isActive = activeGalleryIndex === idx;
               return (
                 <div
@@ -677,7 +717,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                   <img
                     src={view.src}
                     alt={view.label}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#090909' }}
                   />
                   <div
                     style={{
@@ -753,7 +793,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               <div className="num-value">{animatedNumbers.hp}</div>
               <div className="num-unit">HORSEPOWER (HP)</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                @ 13,750 RPM
+                {motorcycle.id.includes('hayabusa') ? '@ 9,700 RPM' : motorcycle.id.includes('fat-bob') ? '@ 5,010 RPM' : motorcycle.id.includes('forty-eight') ? '@ 6,000 RPM' : '@ 7,150 RPM'}
               </span>
             </div>
 
@@ -761,7 +801,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               <div className="num-value">{animatedNumbers.cc}</div>
               <div className="num-unit">DISPLACEMENT (CC)</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                Inline-4 ShiftCam
+                {motorcycle.id.includes('hayabusa') ? 'Inline-Four DOHC 16V' : motorcycle.id.includes('fat-bob') ? 'Twin Cam 96 V-Twin' : motorcycle.id.includes('forty-eight') ? 'Evolution V-Twin' : 'Parallel-Twin'}
               </span>
             </div>
 
@@ -769,7 +809,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               <div className="num-value">{animatedNumbers.nm}</div>
               <div className="num-unit">TORQUE (NM)</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                Peak Tractable Punch
+                {motorcycle.id.includes('hayabusa') ? '@ 7,000 RPM Peak' : motorcycle.id.includes('fat-bob') ? '@ 3,500 RPM Peak' : motorcycle.id.includes('forty-eight') ? '@ 3,500 RPM Peak' : '@ 5,150 RPM Peak'}
               </span>
             </div>
 
@@ -777,23 +817,23 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               <div className="num-value">{animatedNumbers.kg}</div>
               <div className="num-unit">KERB WEIGHT (KG)</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                With M Carbon Wheels
+                {motorcycle.id.includes('hayabusa') ? 'Hyperbike Aero Stance' : motorcycle.id.includes('fat-bob') ? 'Muscle Cruiser Stance' : motorcycle.id.includes('forty-eight') ? 'Low Bobber Stance' : 'Roadster Stance'}
               </span>
             </div>
 
             <div className="editorial-spec-item">
-              <div className="num-value">6-SPD</div>
+              <div className="num-value">{motorcycle.id.includes('forty-eight') ? '5-SPD' : '6-SPD'}</div>
               <div className="num-unit">TRANSMISSION</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                Quickshift Pro
+                {motorcycle.id.includes('hayabusa') ? 'Bi-Directional Quickshifter' : motorcycle.id.includes('fat-bob') ? '6-Speed Cruise Drive' : motorcycle.id.includes('forty-eight') ? 'Belt Drive' : 'Slipper & Assist Clutch'}
               </span>
             </div>
 
             <div className="editorial-spec-item">
-              <div className="num-value">95+</div>
-              <div className="num-unit">OCTANE</div>
+              <div className="num-value">{motorcycle.specs.fuelTank}</div>
+              <div className="num-unit">FUEL CAPACITY</div>
               <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-                High Compression
+                {motorcycle.id.includes('hayabusa') ? '20.0L Sculpted Aero Tank' : motorcycle.id.includes('fat-bob') ? '5.0-Gal Dual Fat Bob Tank' : motorcycle.id.includes('forty-eight') ? 'Iconic 2.1-Gal Peanut Tank' : 'Classic Teardrop Tank'}
               </span>
             </div>
           </div>
@@ -831,7 +871,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
             >
               BUILT FOR <br />
               THE <br />
-              <span style={{ color: '#9B9B9B' }}>UNFORGIVING.</span>
+              <span style={{ color: '#9B9B9B' }}>OPEN ROAD.</span>
             </h2>
 
             <p
@@ -842,7 +882,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                 marginBottom: '1.75rem',
               }}
             >
-              The BMW S 1000 RR does not ask for permission; it takes corners with surgical precision. With BMW’s ShiftCam technology altering valve timing seamlessly at 9,000 RPM, the powerband never runs out of breath. Fitted with the optional factory M Package, carbon fiber wheels shave rotating unsprung mass down to razor-sharp agility.
+              {motorcycle.description}
             </p>
 
             <p
@@ -895,22 +935,20 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               { label: 'MODEL', val: motorcycle.model },
               { label: 'VARIANT', val: motorcycle.variant },
               { label: 'YEAR', val: `${motorcycle.year}` },
-              { label: 'REGISTRATION', val: motorcycle.registration || 'DL 08 (Delhi South)' },
+              { label: 'REGISTRATION', val: motorcycle.registration },
               { label: 'KILOMETRES', val: motorcycle.kmDisplay || `${motorcycle.kilometres.toLocaleString()} KM` },
-              { label: 'OWNERS', val: motorcycle.ownerDisplay || `${motorcycle.owners}st Owner (Individual)` },
-              { label: 'FUEL', val: motorcycle.fuelType || 'Petrol (95+ Octane)' },
-              {
-                label: 'TRANSMISSION',
-                val: motorcycle.transmission.includes('Shift')
-                  ? motorcycle.transmission
-                  : `${motorcycle.transmission} with Shift Assistant Pro`,
-              },
-              { label: 'ENGINE', val: `${motorcycle.engineCC}cc ShiftCam Inline-4 Water/Oil Cooled` },
+              { label: 'OWNERS', val: motorcycle.ownerDisplay || `${motorcycle.owners} Owner` },
+              { label: 'FUEL', val: motorcycle.fuelType || 'Petrol' },
+              { label: 'TRANSMISSION', val: motorcycle.transmission },
+              { label: 'ENGINE', val: motorcycle.specs.engineType },
               {
                 label: 'LOCATION',
-                val: motorcycle.city ? `${motorcycle.city} Lounge, New Delhi` : 'Aerocity Showroom, New Delhi',
+                val: motorcycle.location ? `${motorcycle.location} Vault` : 'Certified Vault',
               },
-              { label: 'EXHAUST SYSTEM', val: 'Full Titanium Akrapovič Factory M' },
+              {
+                label: 'EXHAUST SYSTEM',
+                val: motorcycle.specs.exhaust || (motorcycle.id.includes('forty-eight') ? 'Vance & Hines Performance Exhaust System' : 'Red Rooster Performance Original Exhaust'),
+              },
             ].map((item, idx) => (
               <div
                 key={idx}
@@ -1023,40 +1061,58 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               </div>
               <h3 className="report-card-title">ENGINE</h3>
               <div className="report-card-bar-track">
-                <div className="report-card-bar-fill" style={{ width: '98%' }} />
+                <div className="report-card-bar-fill" style={{ width: `${motorcycle.inspectionScore.powertrain}%` }} />
               </div>
               <p className="report-card-desc">
-                Cylinder compression 13.5:1 across all 4 bores. Zero oil seepage.
+                {motorcycle.id.includes('hayabusa')
+                  ? '1340cc In-line 4 DOHC with 12.5:1 compression. M4 US Full System, pristine factory cylinder balancing with only 3,700 genuine KM.'
+                  : motorcycle.id.includes('fat-bob')
+                  ? '1585cc (96 cu in) Twin Cam V-Twin with 9.2:1 compression. ESPFI fuel injection balanced with zero oil seepage.'
+                  : motorcycle.id.includes('forty-eight')
+                  ? '1202cc Evolution V-Twin with 10.0:1 compression. Valvetrain and pushrods factory-balanced with zero oil seepage.'
+                  : '648cc Parallel-Twin with 9.5:1 compression. Balanced compression across both cylinders with zero oil seepage.'}
               </p>
             </div>
 
-            {/* BRAKES 92% */}
+            {/* BRAKES */}
             <div className="machine-report-card" data-cursor="INSPECT">
               <div className="report-card-top">
                 <span className="report-card-label">STOPPING POWER</span>
-                <span className="report-card-status">92% REMAINING</span>
+                <span className="report-card-status">{motorcycle.inspectionScore.tyresBrakes}% INTEGRITY</span>
               </div>
               <h3 className="report-card-title">BRAKES</h3>
+              <div className="report-card-bar-track">
+                <div className="report-card-bar-fill" style={{ width: `${motorcycle.inspectionScore.tyresBrakes}%` }} />
+              </div>
+              <p className="report-card-desc">
+                {motorcycle.id.includes('hayabusa')
+                  ? 'Dual Brembo Stylema 4-piston radial monobloc calipers with 320mm floating discs & Motion Track ABS. Benchmark stopping power with 98% life.'
+                  : motorcycle.id.includes('fat-bob')
+                  ? 'Dual 300mm front discs with 4-piston calipers & ABS. Both rotors within factory runout tolerance with 95% pad life.'
+                  : motorcycle.id.includes('forty-eight')
+                  ? 'Dual-piston 300mm front disc with ABS. Calipers degreased, lines flushed, and pads inspected at 96% life.'
+                  : '320mm ByBre front disc with dual-channel ABS. Floating rotor true with 97% pad integrity.'}
+              </p>
+            </div>
+
+            {/* TYRES */}
+            <div className="machine-report-card" data-cursor="INSPECT">
+              <div className="report-card-top">
+                <span className="report-card-label">RUBBER HEALTH</span>
+                <span className="report-card-status">OPTIMAL TREAD</span>
+              </div>
+              <h3 className="report-card-title">TYRES</h3>
               <div className="report-card-bar-track">
                 <div className="report-card-bar-fill" style={{ width: '92%' }} />
               </div>
               <p className="report-card-desc">
-                Brembo Stylema sintered pads at 4.2mm thickness. Fluid boiling point 265°C.
-              </p>
-            </div>
-
-            {/* TYRES 90% */}
-            <div className="machine-report-card" data-cursor="INSPECT">
-              <div className="report-card-top">
-                <span className="report-card-label">RUBBER HEALTH</span>
-                <span className="report-card-status">90% TREAD DEPTH</span>
-              </div>
-              <h3 className="report-card-title">TYRES</h3>
-              <div className="report-card-bar-track">
-                <div className="report-card-bar-fill" style={{ width: '90%' }} />
-              </div>
-              <p className="report-card-desc">
-                Pirelli Diablo Supercorsa SP V3 with 3.8mm center / 4.1mm shoulder tread.
+                {motorcycle.id.includes('hayabusa')
+                  ? 'Bridgestone Battlax Hypersport S22 (120/70ZR17 front & 190/50ZR17 rear). Deep original factory tread depth with minimal wear.'
+                  : motorcycle.id.includes('fat-bob')
+                  ? 'Muscular 130/90B16 front and massive 180/70B16 rear Dunlop Harley-Davidson tyres on black slotted aluminium wheels.'
+                  : motorcycle.id.includes('forty-eight')
+                  ? 'Fat front 130/90B16 tyre with white lettering & rear 150/80B16. Deep tread depth with zero flat spotting.'
+                  : 'Brand new rear tyre recently fitted. Pirelli Phantom front tyre with 90%+ healthy road tread.'}
               </p>
             </div>
 
@@ -1071,7 +1127,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                 <div className="report-card-bar-fill" style={{ width: '100%' }} />
               </div>
               <p className="report-card-desc">
-                Serviced exclusively at BMW Motorrad Delhi. Next service due in 6,200 KM.
+                Serviced exclusively at {motorcycle.brand} Authorized Service Center. Full digital logbook verified.
               </p>
             </div>
           </div>
@@ -1110,47 +1166,47 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
               marginBottom: '2rem',
             }}
           >
-            {/* 2023 REGISTRATION */}
+            {/* REGISTRATION YEAR */}
             <div className="provenance-card" data-cursor="RECORD">
               <Calendar size={26} color="var(--accent-orange)" className="provenance-icon" />
               <div className="provenance-val">
-                2023
+                {motorcycle.year}
               </div>
               <div className="provenance-label">
-                REGISTRATION YEAR
+                {motorcycle.id.includes('forty-eight') ? 'REGISTRATION YEAR (2017 MFG)' : 'REGISTRATION YEAR'}
               </div>
             </div>
 
-            {/* 01 PREVIOUS OWNER */}
+            {/* OWNERSHIP */}
             <div className="provenance-card" data-cursor="RECORD">
               <ShieldCheck size={26} color="var(--accent-orange)" className="provenance-icon" />
               <div className="provenance-val">
-                01
+                {String(motorcycle.owners).padStart(2, '0')}
               </div>
               <div className="provenance-label">
-                PREVIOUS OWNER
+                {motorcycle.ownerDisplay}
               </div>
             </div>
 
-            {/* 8,400 KM DISTANCE */}
+            {/* ODOMETER / KM DISTANCE */}
             <div className="provenance-card" data-cursor="RECORD">
               <Activity size={26} color="var(--accent-orange)" className="provenance-icon" />
               <div className="provenance-val">
-                8,400
+                {motorcycle.kilometres.toLocaleString()}
               </div>
               <div className="provenance-label">
-                KM DISTANCE RUN
+                KM DISTANCE RUN ({motorcycle.kmDisplay})
               </div>
             </div>
 
-            {/* DELHI LOCATION */}
+            {/* LOCATION / RTO */}
             <div className="provenance-card" data-cursor="RECORD">
               <Compass size={26} color="var(--accent-orange)" className="provenance-icon" />
               <div className="provenance-val">
-                DELHI
+                {motorcycle.location}
               </div>
               <div className="provenance-label">
-                LOCATION / RTO
+                LOCATION / RTO ({motorcycle.registration})
               </div>
             </div>
           </div>
@@ -1176,16 +1232,6 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
         </div>
       </section>
 
-      {/* ==================================================
-          CINEMATIC S1000RR HEADLIGHT ATMOSPHERE SHOWCASE
-         ================================================== */}
-      <section style={{ marginBottom: 'clamp(5rem, 8vw, 8rem)' }}>
-        <HeadlightAtmosphereBackdrop
-          title={`${motorcycle.brand} ${motorcycle.model}`}
-          subtitle={`${motorcycle.brand.toUpperCase()} // OPTIC BEAM MATRIX & DUAL LASER HEADLIGHT IGNITION`}
-          showControls={true}
-        />
-      </section>
 
       {/* ==================================================
           360° INTERACTIVE TURNTABLE & FINANCING CALCULATOR
@@ -1245,7 +1291,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
                   marginBottom: '0.5rem',
                 }}
               >
-                ₹18.75 L
+                {motorcycle.priceDisplay}
               </div>
 
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '480px' }}>
@@ -1346,7 +1392,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `url(${GALLERY_VIEWS[0].src})`,
+            backgroundImage: `url(${galleryViews[0]?.src || motorcycle.images[0]})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'brightness(0.72) contrast(110%)',

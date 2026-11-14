@@ -13,7 +13,7 @@ import type { Motorcycle } from './data/motorcycles';
 
 export function App() {
   const [activePage, setActivePage] = useState<'home' | 'collection' | 'detail'>('home');
-  const [selectedMachineId, setSelectedMachineId] = useState<string>('bmw-s1000rr-m-2023');
+  const [selectedMachineId, setSelectedMachineId] = useState<string>('re-interceptor-650-2021');
   const [collectionCategory, setCollectionCategory] = useState<string>('ALL');
 
   // Modals state
@@ -27,9 +27,9 @@ export function App() {
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('fancy_rides_garage');
-      return saved ? JSON.parse(saved) : ['bmw-s1000rr-m-2023', 'ducati-panigale-v2-bayliss-2022'];
+      return saved ? JSON.parse(saved) : ['re-interceptor-650-2021'];
     } catch {
-      return ['bmw-s1000rr-m-2023'];
+      return ['re-interceptor-650-2021'];
     }
   });
 

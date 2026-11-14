@@ -70,7 +70,7 @@ export const InspectionMatrix: React.FC = () => {
         <div style={{ marginBottom: '3.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
             <span className="telemetry-badge accent">
-              <span className="dot" /> THE FANCY RIDES PROTOCOL
+              <span className="dot" /> THE FANCY RIDES INDIA PROTOCOL
             </span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               150+ POINT CERTIFICATION
@@ -203,7 +203,7 @@ export const InspectionMatrix: React.FC = () => {
 
             <div>
               <h4 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.2rem' }}>
-                THE FANCY RIDES TITLE & CONDITION GUARANTEE
+                THE FANCY RIDES INDIA TITLE & CONDITION GUARANTEE
               </h4>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', maxWidth: '650px' }}>
                 Every machine comes with verified clear title, 6-month comprehensive powertrain warranty, 7-day money-back guarantee, and buyback assurance program.

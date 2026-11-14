@@ -21,35 +21,38 @@ interface CollectionPageProps {
 
 const CATEGORY_SHORTCUTS = [
   'ALL',
-  'ADVENTURE',
   'ROADSTER',
   'SUPERBIKE',
   'CRUISER',
+  'CLASSIC',
+  'ADVENTURE',
   'TOURING',
   'SPORT',
-  'CLASSIC',
+  'NAKED',
 ];
 
 const BRAND_OPTIONS = [
   'ALL',
+  'HARLEY-DAVIDSON',
+  'ROYAL ENFIELD',
   'BMW MOTORRAD',
   'DUCATI',
   'TRIUMPH',
   'KAWASAKI',
-  'HARLEY-DAVIDSON',
   'INDIAN MOTORCYCLE',
   'APRILIA',
   'SUZUKI',
   'HONDA',
 ];
 
-const YEAR_OPTIONS = ['ALL', '2024', '2023', '2022', '2021'];
+const YEAR_OPTIONS = ['ALL', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015'];
 
 const KM_OPTIONS = [
   { label: 'ALL ODOMETERS', value: 999999 },
   { label: 'UNDER 5,000 KM', value: 5000 },
-  { label: 'UNDER 8,000 KM', value: 8000 },
   { label: 'UNDER 10,000 KM', value: 10000 },
+  { label: 'UNDER 20,000 KM', value: 20000 },
+  { label: 'UNDER 30,000 KM', value: 30000 },
 ];
 
 const SORT_OPTIONS = [
@@ -177,7 +180,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
         <div style={{ marginBottom: '3.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
             <span className="telemetry-badge accent">
-              <span className="dot" /> FANCY RIDES / SHOWROOM CATALOGUE
+              <span className="dot" /> FANCY RIDES INDIA / SHOWROOM CATALOGUE
             </span>
 
             {/* Total count display */}
@@ -578,11 +581,14 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                   style={{
                     gridColumn: 'span 7',
                     position: 'relative',
-                    aspectRatio: '16 / 10',
+                    aspectRatio: '4 / 3',
                     minHeight: '380px',
                     overflow: 'hidden',
-                    background: '#090909',
+                    background: 'radial-gradient(ellipse at center, #181818 0%, #080808 100%)',
                     borderRadius: '20px 0 0 20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   <img
@@ -591,7 +597,9 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                     style={{
                       width: '100%',
                       height: '100%',
-                      objectFit: 'cover',
+                      objectFit: 'contain',
+                      objectPosition: 'center',
+                      padding: '8px',
                       transition: 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
                     }}
                   />

@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSellModal }) =
               <span className="dot" /> THE ETHOS
             </span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#666666', letterSpacing: '0.1em' }}>
-              FANCY RIDES AUTOMOTIVE
+              FANCY RIDES INDIA AUTOMOTIVE
             </span>
           </div>
 
@@ -75,10 +75,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSellModal }) =
                   borderRadius: '8px',
                 }}
               >
-                FR
+                FRI
               </div>
               <span style={{ fontSize: '1.15rem', fontWeight: 900, letterSpacing: '0.04em', color: '#F5F5F2' }}>
-                FANCY RIDES
+                FANCY RIDES <span style={{ color: 'var(--accent-orange)' }}>INDIA</span>
               </span>
             </div>
 
@@ -235,7 +235,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSellModal }) =
           }}
         >
           <div>
-            © 2026 FANCY RIDES AUTOMOTIVE PVT. LTD. ALL RIGHTS RESERVED.
+            © 2026 FANCY RIDES INDIA AUTOMOTIVE PVT. LTD. ALL RIGHTS RESERVED.
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem' }}>

@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw camera files and import dumps
+*.cr2
+*.CR2
+public/images/HD 48/
+public/images/HD fatbob/
+public/images/Ducati monster/
