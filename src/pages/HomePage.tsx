@@ -128,7 +128,7 @@ const BRAND_DATA = [
     name: 'BMW',
     origin: 'MUNICH, GERMANY',
     tag: 'PRECISION / SHIFTCAM RACING',
-    bg: '/images/bmw-s1000rr-hero.jpg',
+    bg: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
   },
   {
     name: 'DUCATI',
