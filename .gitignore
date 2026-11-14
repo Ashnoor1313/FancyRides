@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# Archives
+*.zip
+*.tar.gz
+
 # Raw camera files and import dumps
 *.cr2
 *.CR2
