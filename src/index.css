@@ -176,6 +176,99 @@ h4, h5, h6 {
   letter-spacing: 0.06em;
 }
 
+/* ==================================================
+   HOMEPAGE ORIGINAL TYPOGRAPHY (SPACE GROTESK & SYNE)
+   Restores original high-tech automotive font style
+   specifically on the first page, keeping rest unchanged.
+   ================================================== */
+.homepage-root {
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-editorial: 'Syne', 'Space Grotesk', sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
+}
+
+.homepage-root h1,
+.homepage-root h2,
+.homepage-root h3,
+.homepage-root h4,
+.homepage-root h5,
+.homepage-root h6 {
+  font-family: var(--font-heading);
+  font-style: normal;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.homepage-root h1 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: #F5F5F2;
+}
+
+.homepage-root h2 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+
+.homepage-root h3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.homepage-root h4,
+.homepage-root h5,
+.homepage-root h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.homepage-root .font-display {
+  font-family: var(--font-heading);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.homepage-root .font-editorial {
+  font-family: var(--font-editorial);
+  font-style: normal;
+  letter-spacing: -0.03em;
+}
+
+.homepage-root p,
+.homepage-root span,
+.homepage-root div,
+.homepage-root button {
+  font-family: inherit;
+}
+
+.homepage-root .font-mono,
+.homepage-root .telemetry-badge,
+.homepage-root [style*="--font-mono"] {
+  font-family: var(--font-mono) !important;
+}
+
+.homepage-root .btn-primary,
+.homepage-root .btn-secondary,
+.homepage-root .btn-special-cta {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
 .text-accent {
   color: var(--accent-orange);
 }

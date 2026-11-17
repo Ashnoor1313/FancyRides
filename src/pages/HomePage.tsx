@@ -399,7 +399,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const justInMachines = MOTORCYCLES.slice(0, 6);
 
   return (
-    <div style={{ position: 'relative', width: '100%', overflowX: 'hidden', background: 'var(--bg-deep)' }}>
+    <div className="homepage-root" style={{ position: 'relative', width: '100%', overflowX: 'hidden', background: 'var(--bg-deep)' }}>
       
       {/* ==================================================
           SECTION 01 — HERO & FUNCTIONAL HERO CAROUSEL
