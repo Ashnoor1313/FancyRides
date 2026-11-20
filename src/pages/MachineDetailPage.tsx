@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { MOTORCYCLES } from '../data/motorcycles';
+import { useInventory } from '../context/InventoryContext';
 import type { Motorcycle } from '../data/motorcycles';
 import { MotorcycleCard } from '../components/MotorcycleCard';
 import { Machine360Viewer } from '../components/Machine360Viewer';
@@ -36,10 +36,26 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
   onToggleFavorite,
   onOpenBooking,
 }) => {
+  const { motorcycles } = useInventory();
   // Always resolve machine, default to first available
   const motorcycle =
-    MOTORCYCLES.find((m) => m.id === machineId) ||
-    MOTORCYCLES[0];
+    motorcycles.find((m) => m.id === machineId) ||
+    motorcycles[0] ||
+    ({
+      id: 'unknown',
+      brand: 'MACHINE',
+      model: 'ARCHIVE',
+      category: 'SUPERBIKE',
+      price: 0,
+      priceDisplay: 'Price on Request',
+      year: 2024,
+      kilometres: 0,
+      kmDisplay: '0 KM',
+      owners: 1,
+      ownerDisplay: '1ST OWNER',
+      location: 'DELHI',
+      images: ['/images/hayabusa/IMG_0001.jpg'],
+    } as any);
 
   const galleryViews = useMemo(() => {
     if (motorcycle.images && motorcycle.images.length > 0) {
@@ -180,7 +196,7 @@ export const MachineDetailPage: React.FC<MachineDetailPageProps> = ({
   };
 
   // Related machines (3 machines)
-  const relatedBikes = MOTORCYCLES.filter(
+  const relatedBikes = motorcycles.filter(
     (b) => b.id !== motorcycle.id
   ).slice(0, 3);
 

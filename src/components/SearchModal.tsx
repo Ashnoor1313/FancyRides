@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { MOTORCYCLES } from '../data/motorcycles';
+import { useInventory } from '../context/InventoryContext';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -9,17 +9,18 @@ interface SearchModalProps {
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSelectMachine }) => {
+  const { motorcycles } = useInventory();
   const [query, setQuery] = useState('');
 
   if (!isOpen) return null;
 
   const results = query.trim()
-    ? MOTORCYCLES.filter((b) =>
+    ? motorcycles.filter((b) =>
         `${b.brand} ${b.model} ${b.category} ${b.location} ${b.tagline}`
           .toLowerCase()
           .includes(query.toLowerCase())
       )
-    : MOTORCYCLES.slice(0, 4);
+    : motorcycles.slice(0, 4);
 
   return (
     <div className="modal-backdrop" onClick={onClose}>

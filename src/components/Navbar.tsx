@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Heart, Menu, X, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Search, Heart, Menu, X, ArrowUpRight, Shield } from 'lucide-react';
+import { useInventory } from '../context/InventoryContext';
 
 interface NavbarProps {
-  activePage: 'home' | 'collection' | 'detail';
-  onNavigate: (page: 'home' | 'collection' | 'detail', params?: { category?: string; machineId?: string }) => void;
+  activePage: 'home' | 'collection' | 'detail' | 'fancy-numbers' | 'admin';
+  onNavigate: (page: 'home' | 'collection' | 'detail' | 'fancy-numbers' | 'admin', params?: { category?: string; machineId?: string }) => void;
   favoritesCount: number;
   onOpenFavorites: () => void;
   onOpenSellModal: () => void;
   onOpenSearch: () => void;
+  onOpenAdminPrompt?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -17,9 +19,53 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenFavorites,
   onOpenSellModal,
   onOpenSearch,
+  onOpenAdminPrompt,
 }) => {
+  const { isAdmin } = useInventory();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Secret 5-click easter egg counter on logo badge
+  const [logoClicks, setLogoClicks] = useState(0);
+  const lastLogoClickTimeRef = useRef(0);
+
+  const handleLogoBadgeClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const now = Date.now();
+    if (now - lastLogoClickTimeRef.current < 900) {
+      const nextCount = logoClicks + 1;
+      setLogoClicks(nextCount);
+      if (nextCount >= 5) {
+        setLogoClicks(0);
+        if (onOpenAdminPrompt) {
+          onOpenAdminPrompt();
+        } else {
+          onNavigate('admin');
+        }
+        return;
+      }
+    } else {
+      setLogoClicks(1);
+    }
+    lastLogoClickTimeRef.current = now;
+    onNavigate('home');
+  };
+
+  // Secret Keyboard Shortcut: Ctrl + Shift + A
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        if (onOpenAdminPrompt) {
+          onOpenAdminPrompt();
+        } else {
+          onNavigate('admin');
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onOpenAdminPrompt, onNavigate]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,32 +99,35 @@ export const Navbar: React.FC<NavbarProps> = ({
           className={`nav-floating-pill ${isScrolled ? 'scrolled' : ''}`}
           style={{ pointerEvents: 'auto' }}
         >
-          {/* Brand Monogram & Title */}
+          {/* Brand Monogram & Title (5 clicks on logo badge opens dealer vault) */}
           <div
-            onClick={() => onNavigate('home')}
+            onClick={handleLogoBadgeClick}
             style={{
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '0.75rem',
+              userSelect: 'none',
             }}
+            title="Fancy Rides India"
           >
             <div
               style={{
                 width: '34px',
                 height: '32px',
-                background: '#161616',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
+                background: isAdmin ? 'rgba(255, 90, 31, 0.2)' : '#161616',
+                border: `1px solid ${isAdmin ? 'var(--accent-orange)' : logoClicks > 0 ? 'rgba(255, 90, 31, 0.6)' : 'rgba(255, 255, 255, 0.12)'}`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontWeight: 800,
-                color: '#F5F5F2',
+                color: isAdmin ? 'var(--accent-orange)' : '#F5F5F2',
                 fontSize: '0.78rem',
                 fontFamily: 'var(--font-mono)',
                 borderRadius: '8px',
                 letterSpacing: '-0.02em',
-                transition: 'border-color 0.25s ease',
+                transition: 'all 0.25s ease',
+                boxShadow: isAdmin ? '0 0 12px rgba(255, 90, 31, 0.3)' : 'none',
               }}
             >
               FRI
@@ -125,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             style={{
               display: 'none',
               alignItems: 'center',
-              gap: '2.25rem',
+              gap: '2rem',
             }}
             className="desktop-nav-links"
           >
@@ -141,6 +190,33 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`nav-link-item ${activePage === 'collection' ? 'active' : ''}`}
             >
               COLLECTION
+            </button>
+
+            <button
+              onClick={() => onNavigate('fancy-numbers')}
+              className={`nav-link-item ${activePage === 'fancy-numbers' ? 'active' : ''}`}
+              style={{
+                color: activePage === 'fancy-numbers' ? 'var(--accent-orange)' : undefined,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              <span>VIP NUMBERS</span>
+              <span
+                style={{
+                  background: 'rgba(255, 90, 31, 0.15)',
+                  color: 'var(--accent-orange)',
+                  fontSize: '0.62rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 800,
+                  padding: '1px 6px',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(255, 90, 31, 0.3)',
+                }}
+              >
+                0001
+              </span>
             </button>
 
             <button
@@ -250,6 +326,31 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <span className="hide-on-mobile">GARAGE</span>
             </button>
+
+            {isAdmin && (
+              <button
+                onClick={() => onNavigate('admin')}
+                style={{
+                  background: 'rgba(255, 90, 31, 0.15)',
+                  border: '1px solid var(--accent-orange)',
+                  borderRadius: '999px',
+                  color: 'var(--accent-orange)',
+                  padding: '5px 12px',
+                  fontSize: '0.72rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  boxShadow: '0 0 12px rgba(255, 90, 31, 0.25)',
+                }}
+                title="Open Dealer Inventory Vault"
+              >
+                <Shield size={12} />
+                <span>DEALER</span>
+              </button>
+            )}
 
             <button
               onClick={onOpenSellModal}
@@ -366,6 +467,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
             >
               02 / THE COLLECTION
+            </div>
+
+            <div
+              onClick={() => {
+                onNavigate('fancy-numbers');
+                setMobileMenuOpen(false);
+              }}
+              style={{
+                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 800,
+                cursor: 'pointer',
+                color: activePage === 'fancy-numbers' ? 'var(--accent-orange)' : '#666666',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              03 / VIP NUMBERS (0001)
             </div>
 
             <div

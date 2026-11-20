@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { MOTORCYCLES } from '../data/motorcycles';
+import { useInventory } from '../context/InventoryContext';
 import {
   Search,
   ArrowRight,
@@ -69,6 +69,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
   onToggleFavorite,
   initialCategory = 'ALL',
 }) => {
+  const { motorcycles } = useInventory();
   // Filters state
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
@@ -86,7 +87,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
   // Filtered & Sorted inventory
   const filteredBikes = useMemo(() => {
-    return MOTORCYCLES.filter((bike) => {
+    return motorcycles.filter((bike) => {
       // Category filter
       if (selectedCategory !== 'ALL' && bike.category !== selectedCategory) {
         return false;

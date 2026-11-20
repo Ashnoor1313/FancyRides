@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Trash2, ArrowRight, Heart } from 'lucide-react';
-import { MOTORCYCLES } from '../data/motorcycles';
+import { useInventory } from '../context/InventoryContext';
 
 interface FavoritesDrawerProps {
   isOpen: boolean;
@@ -17,9 +17,10 @@ export const FavoritesDrawer: React.FC<FavoritesDrawerProps> = ({
   onRemoveFavorite,
   onSelectMachine,
 }) => {
+  const { motorcycles } = useInventory();
   if (!isOpen) return null;
 
-  const savedBikes = MOTORCYCLES.filter((b) => favorites.includes(b.id));
+  const savedBikes = motorcycles.filter((b) => favorites.includes(b.id));
 
   return (
     <div className="modal-backdrop" onClick={onClose}>

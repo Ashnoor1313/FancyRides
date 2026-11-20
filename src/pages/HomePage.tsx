@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MOTORCYCLES } from '../data/motorcycles';
+import { useInventory } from '../context/InventoryContext';
 import { MotorcycleCard } from '../components/MotorcycleCard';
 import {
   ArrowRight,
@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 interface HomePageProps {
-  onNavigate: (page: 'home' | 'collection' | 'detail', params?: { category?: string; machineId?: string }) => void;
+  onNavigate: (page: 'home' | 'collection' | 'detail' | 'fancy-numbers' | 'admin', params?: { category?: string; machineId?: string }) => void;
   favorites: string[];
   onToggleFavorite: (id: string, e: React.MouseEvent) => void;
   onOpenSellModal: () => void;
@@ -393,10 +393,11 @@ export const HomePage: React.FC<HomePageProps> = ({
     }
   };
 
+  const { motorcycles } = useInventory();
   const currentHero = HERO_SLIDES[currentSlide];
 
-  // 6 specific bikes for Section 04 Just In
-  const justInMachines = MOTORCYCLES.slice(0, 6);
+  // Live bikes for Section 04 Just In
+  const justInMachines = motorcycles.slice(0, 8);
 
   return (
     <div className="homepage-root" style={{ position: 'relative', width: '100%', overflowX: 'hidden', background: 'var(--bg-deep)' }}>
@@ -1001,6 +1002,102 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ==================================================
+          SECTION — EXCLUSIVE VIP NUMBERS TEASER BANNER
+         ================================================== */}
+      <section
+        style={{
+          position: 'relative',
+          padding: '2rem 0',
+          background: 'linear-gradient(180deg, var(--bg-deep) 0%, #0F0E0C 50%, var(--bg-secondary) 100%)',
+          borderTop: '1px solid rgba(255, 90, 31, 0.2)',
+          borderBottom: '1px solid rgba(255, 90, 31, 0.2)',
+        }}
+      >
+        <div className="container-wide">
+          <div
+            style={{
+              background: 'radial-gradient(ellipse at 80% 50%, rgba(255, 90, 31, 0.12) 0%, rgba(12, 12, 12, 0.95) 75%)',
+              border: '1px solid rgba(255, 90, 31, 0.35)',
+              borderRadius: '24px',
+              padding: 'clamp(2rem, 4vw, 3rem)',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '2rem',
+              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 90, 31, 0.1)',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <div style={{ maxWidth: '680px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem' }}>
+                <span className="telemetry-badge accent">
+                  <span className="dot" /> VIP REGISTRATION PLATES
+                </span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#B5B5B0' }}>
+                  DL · HR · PB · CH · UP
+                </span>
+              </div>
+
+              <h3
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(1.8rem, 3.2vw, 2.6rem)',
+                  fontWeight: 900,
+                  letterSpacing: '-0.03em',
+                  color: '#F5F5F2',
+                  lineHeight: 1.1,
+                  margin: '0 0 0.85rem',
+                }}
+              >
+                CRAFTING ROAD SUPREMACY WITH <br />
+                <span style={{ color: 'var(--accent-orange)' }}>SOVEREIGN VIP NUMBERS.</span>
+              </h3>
+
+              <p style={{ color: '#C0C0B8', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
+                Looking for iconic plates like <strong>0001</strong>, <strong>0007</strong>, <strong>9999</strong>, or <strong>8055 (BOSS)</strong> for your superbike or luxury garage? Explore our certified inventory with verified RTO NOC clearance.
+              </p>
+            </div>
+
+            {/* Plates Graphic & CTA */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1.25rem' }}>
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  color: '#0A0A0A',
+                  borderRadius: '10px',
+                  padding: '10px 18px',
+                  border: '2px solid #222',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '14px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+                }}
+              >
+                <div style={{ background: '#0B3B95', color: '#fff', fontSize: '0.65rem', fontWeight: 900, padding: '3px 6px', borderRadius: '4px' }}>
+                  IND
+                </div>
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 900, letterSpacing: '0.12em' }}>
+                  DL 01 AA 0001
+                </span>
+              </div>
+
+              <button
+                onClick={() => onNavigate('fancy-numbers')}
+                className="btn-special-cta"
+                style={{ padding: '12px 24px', fontSize: '0.84rem' }}
+              >
+                <span>EXPLORE ALL VIP NUMBERS</span>
+                <span className="cta-icon-bubble">
+                  <ArrowRight size={15} strokeWidth={2.5} />
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ==================================================
           SECTION 05 — BRANDS (EDITORIAL INTERACTIVE ROSTER)

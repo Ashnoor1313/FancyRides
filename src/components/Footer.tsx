@@ -1,8 +1,8 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Lock, Crown } from 'lucide-react';
 
 interface FooterProps {
-  onNavigate: (page: 'home' | 'collection' | 'detail', params?: { category?: string }) => void;
+  onNavigate: (page: 'home' | 'collection' | 'detail' | 'fancy-numbers' | 'admin', params?: { category?: string }) => void;
   onOpenSellModal: () => void;
 }
 
@@ -163,6 +163,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSellModal }) =
               >
                 Sell Your Ride (VIP Acquisition) <ArrowUpRight size={14} color="var(--accent-orange)" />
               </button>
+
+              <button
+                onClick={() => onNavigate('fancy-numbers')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--accent-orange)',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                }}
+              >
+                VIP Registration Plates (0001) <Crown size={14} color="var(--accent-orange)" />
+              </button>
               <button
                 onClick={() => {
                   onNavigate('home');
@@ -238,10 +256,33 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSellModal }) =
             © 2026 FANCY RIDES INDIA AUTOMOTIVE PVT. LTD. ALL RIGHTS RESERVED.
           </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
             <span style={{ cursor: 'pointer' }}>PRIVACY PROTOCOL</span>
             <span style={{ cursor: 'pointer' }}>TERMS OF ENGAGEMENT</span>
             <span style={{ cursor: 'pointer' }}>DISCLAIMER</span>
+            <button
+              onClick={() => onNavigate('admin')}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#444444',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: '0.68rem',
+                fontFamily: 'var(--font-mono)',
+                padding: '2px 6px',
+                borderRadius: '4px',
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-orange)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#444444')}
+              title="Dealer Console"
+            >
+              <Lock size={11} />
+              <span>DEALER CONSOLE</span>
+            </button>
             <span style={{ color: '#9B9B9B' }}>EST. 2026</span>
           </div>
         </div>
