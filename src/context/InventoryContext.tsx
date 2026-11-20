@@ -44,7 +44,12 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          return parsed.map((m: Motorcycle) => {
+            if (m.price && (!m.priceDisplay || m.priceDisplay.includes(' L') || m.priceDisplay.endsWith('L'))) {
+              return { ...m, priceDisplay: `₹${m.price.toLocaleString('en-IN')}` };
+            }
+            return m;
+          });
         }
       }
     } catch (e) {
@@ -69,12 +74,14 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     return INITIAL_FANCY_NUMBERS;
   });
 
-  // Admin Security Pin (Default: 1313)
+  // Admin Security Pin (Default: 1234)
   const [adminPin, setAdminPin] = useState<string>(() => {
     try {
-      return localStorage.getItem(STORAGE_KEY_PIN) || '1313';
+      const stored = localStorage.getItem(STORAGE_KEY_PIN);
+      if (stored && stored !== '1313') return stored;
+      return '1234';
     } catch {
-      return '1313';
+      return '1234';
     }
   });
 
@@ -206,7 +213,7 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   // Admin Auth Methods
   const loginAdmin = (pin: string): boolean => {
     const cleanPin = pin.trim();
-    if (cleanPin === adminPin || cleanPin === '1313') {
+    if (cleanPin === adminPin || cleanPin === '1234') {
       setIsAdmin(true);
       return true;
     }

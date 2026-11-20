@@ -400,7 +400,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const justInMachines = motorcycles.slice(0, 8);
 
   return (
-    <div className="homepage-root" style={{ position: 'relative', width: '100%', overflowX: 'hidden', background: 'var(--bg-deep)' }}>
+    <div style={{ position: 'relative', width: '100%', overflowX: 'hidden', background: 'var(--bg-deep)' }}>
       
       {/* ==================================================
           SECTION 01 — HERO & FUNCTIONAL HERO CAROUSEL
@@ -530,10 +530,12 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div style={{ maxWidth: '820px' }}>
               <h1
                 style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
                   fontSize: 'clamp(3.2rem, 7.5vw, 6.8rem)',
-                  lineHeight: 0.9,
-                  fontWeight: 900,
-                  letterSpacing: '-0.04em',
+                  lineHeight: 0.95,
+                  letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
                   marginBottom: '1.5rem',
                   color: '#F5F5F2',
@@ -696,10 +698,12 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <h2
               style={{
+                fontFamily: 'var(--font-display)',
+                fontStyle: 'italic',
+                fontWeight: 400,
                 fontSize: 'clamp(3rem, 7.5vw, 6.5rem)',
                 lineHeight: 0.95,
-                fontWeight: 900,
-                letterSpacing: '-0.04em',
+                letterSpacing: '-0.02em',
                 textTransform: 'uppercase',
                 color: '#F5F5F2',
               }}
@@ -2039,7 +2043,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                       marginTop: '0.2rem',
                     }}
                   >
-                    ₹2.39 L
+                    ₹2,39,000
                   </div>
                 </div>
 
@@ -2145,10 +2149,12 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <h2
             style={{
+              fontFamily: 'var(--font-display)',
+              fontStyle: 'italic',
+              fontWeight: 400,
               fontSize: 'clamp(3.2rem, 7.5vw, 6.8rem)',
               lineHeight: 0.95,
-              fontWeight: 900,
-              letterSpacing: '-0.04em',
+              letterSpacing: '-0.02em',
               textTransform: 'uppercase',
               marginBottom: '2.5rem',
               color: '#F5F5F2',

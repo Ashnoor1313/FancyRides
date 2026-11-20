@@ -379,7 +379,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 className={`filter-pill-btn ${maxPrice < 3000000 ? 'active' : ''}`}
               >
                 {maxPrice < 3000000 && <span className="active-dot" />}
-                <span>PRICE: UP TO ₹{(maxPrice / 100000).toFixed(0)} L</span>
+                <span>PRICE: UP TO ₹{maxPrice.toLocaleString('en-IN')}</span>
                 <ChevronDown size={13} />
               </button>
 
@@ -387,20 +387,20 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 <div className="filter-dropdown-menu" style={{ width: '280px', padding: '1.25rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.74rem', marginBottom: '0.5rem' }}>
                     <span style={{ color: 'var(--text-secondary)' }}>MAX VALUATION</span>
-                    <span style={{ color: '#F5F5F2', fontWeight: 800 }}>₹{(maxPrice / 100000).toFixed(2)} L</span>
+                    <span style={{ color: '#F5F5F2', fontWeight: 800 }}>₹{maxPrice.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
-                    min={1000000}
+                    min={200000}
                     max={3000000}
-                    step={100000}
+                    step={50000}
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(Number(e.target.value))}
                     style={{ width: '100%', accentColor: 'var(--accent-orange)', cursor: 'pointer' }}
                   />
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
-                    <span>₹10 L</span>
-                    <span>₹30 L+</span>
+                    <span>₹2,00,000</span>
+                    <span>₹30,00,000+</span>
                   </div>
                 </div>
               )}

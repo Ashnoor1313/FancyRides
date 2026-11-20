@@ -25,7 +25,7 @@ export const EMICalculator: React.FC<EMICalculatorProps> = ({ price, modelName }
   const totalInterest = totalPayable - principal;
 
   const formatLakhs = (val: number) => {
-    return `₹${(val / 100000).toFixed(2)} L`;
+    return `₹${Math.round(val).toLocaleString('en-IN')}`;
   };
 
   const formatINR = (val: number) => {

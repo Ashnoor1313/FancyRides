@@ -86,7 +86,7 @@ export const AdminPasscodeModal: React.FC<AdminPasscodeModalProps> = ({
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 9999,
+        zIndex: 999999,
         background: 'rgba(5, 5, 5, 0.88)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -385,7 +385,7 @@ export const AdminPasscodeModal: React.FC<AdminPasscodeModalProps> = ({
               color: '#71716D',
             }}
           >
-            Showroom Master Key Hint: <span style={{ color: 'var(--accent-orange)' }}>1313</span>
+            Showroom Master Key Hint: <span style={{ color: 'var(--accent-orange)' }}>1234</span>
           </div>
         </div>
       </div>

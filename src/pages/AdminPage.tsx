@@ -102,7 +102,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     variant: '',
     category: 'SUPERBIKE',
     price: 520000,
-    priceDisplay: '₹5.20 L',
+    priceDisplay: '₹5,20,000',
     year: 2023,
     kilometres: 12000,
     kmDisplay: '12,000 KM',
@@ -190,7 +190,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
       variant: 'Custom Spec Edition',
       category: 'SUPERBIKE',
       price: 520000,
-      priceDisplay: '₹5.20 L',
+      priceDisplay: '₹5,20,000',
       year: 2023,
       kilometres: 15000,
       kmDisplay: '15,000 KM',
@@ -271,7 +271,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
       variant: bikeFormData.variant || 'Certified Edition',
       category: (bikeFormData.category as any) || 'SUPERBIKE',
       price: Number(bikeFormData.price) || 500000,
-      priceDisplay: bikeFormData.priceDisplay || `₹${((Number(bikeFormData.price) || 500000) / 100000).toFixed(2)} L`,
+      priceDisplay: bikeFormData.priceDisplay || `₹${(Number(bikeFormData.price) || 500000).toLocaleString('en-IN')}`,
       year: Number(bikeFormData.year) || 2022,
       kilometres: Number(bikeFormData.kilometres) || 10000,
       kmDisplay: bikeFormData.kmDisplay || `${Number(bikeFormData.kilometres || 10000).toLocaleString('en-IN')} KM`,
@@ -1375,7 +1375,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                 <input
                   type="text"
-                  placeholder="Enter new PIN (e.g. 1313)"
+                  placeholder="Enter new PIN (e.g. 1234)"
                   value={newPinInput}
                   onChange={(e) => setNewPinInput(e.target.value)}
                   style={{
@@ -1581,10 +1581,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                   <strong>URL Shortcut:</strong> Add <code style={{ color: 'var(--accent-orange)' }}>#admin</code> to your website address (e.g. <code>fancyrides.in/#admin</code>).
                 </li>
                 <li>
-                  <strong>Secret Logo Click:</strong> Click the <code style={{ color: 'var(--accent-orange)' }}>FRI</code> logo badge in the top navigation bar <strong>5 times quickly</strong>.
+                  <strong>Quick Keyboard:</strong> Simply type <code style={{ color: 'var(--accent-orange)' }}>admin</code> anywhere on the site, or press <code style={{ color: 'var(--accent-orange)' }}>Ctrl + Shift + A</code>.
                 </li>
                 <li>
-                  <strong>Keyboard Shortcut:</strong> Press <code style={{ color: 'var(--accent-orange)' }}>Ctrl + Shift + A</code> anywhere on your website.
+                  <strong>Menu Option:</strong> Open the top-right menu drawer and click <code style={{ color: 'var(--accent-orange)' }}>CLIENT PORTAL</code>.
+                </li>
+                <li>
+                  <strong>Footer Link:</strong> Click <code style={{ color: 'var(--accent-orange)' }}>DEALER CONSOLE</code> in the footer.
                 </li>
               </ul>
             </div>
@@ -1837,7 +1840,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                     value={bikeFormData.price || ''}
                     onChange={(e) => {
                       const num = Number(e.target.value);
-                      const display = num >= 100000 ? `₹${(num / 100000).toFixed(2)} L` : `₹${num.toLocaleString('en-IN')}`;
+                      const display = num ? `₹${num.toLocaleString('en-IN')}` : '';
                       setBikeFormData({ ...bikeFormData, price: num, priceDisplay: display });
                     }}
                     style={{
@@ -1858,7 +1861,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                   </label>
                   <input
                     type="text"
-                    placeholder="₹5.20 L"
+                    placeholder="₹5,20,000"
                     value={bikeFormData.priceDisplay || ''}
                     onChange={(e) => setBikeFormData({ ...bikeFormData, priceDisplay: e.target.value })}
                     style={{

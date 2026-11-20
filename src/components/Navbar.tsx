@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Heart, Menu, X, ArrowUpRight, Shield } from 'lucide-react';
+import { Search, Heart, Menu, X, ArrowUpRight, Lock } from 'lucide-react';
 import { useInventory } from '../context/InventoryContext';
 
 interface NavbarProps {
@@ -25,44 +25,39 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Secret 5-click easter egg counter on logo badge
-  const [logoClicks, setLogoClicks] = useState(0);
-  const lastLogoClickTimeRef = useRef(0);
-
-  const handleLogoBadgeClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const now = Date.now();
-    if (now - lastLogoClickTimeRef.current < 900) {
-      const nextCount = logoClicks + 1;
-      setLogoClicks(nextCount);
-      if (nextCount >= 5) {
-        setLogoClicks(0);
-        if (onOpenAdminPrompt) {
-          onOpenAdminPrompt();
-        } else {
-          onNavigate('admin');
-        }
-        return;
-      }
-    } else {
-      setLogoClicks(1);
-    }
-    lastLogoClickTimeRef.current = now;
-    onNavigate('home');
-  };
-
-  // Secret Keyboard Shortcut: Ctrl + Shift + A
+  // Secret Key Sequences for Admin:
+  // 1. Typing "admin" anywhere on keyboard
+  // 2. Ctrl + Shift + A (or Cmd + Shift + A)
+  const typedSequenceRef = useRef<string[]>([]);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // 1. Keyboard shortcut: Ctrl + Shift + A
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
         e.preventDefault();
-        if (onOpenAdminPrompt) {
-          onOpenAdminPrompt();
-        } else {
-          onNavigate('admin');
+        if (onOpenAdminPrompt) onOpenAdminPrompt();
+        else onNavigate('admin');
+        return;
+      }
+
+      // 2. Typing "admin" in sequence
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return;
+      }
+
+      if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        typedSequenceRef.current.push(e.key.toLowerCase());
+        if (typedSequenceRef.current.length > 5) {
+          typedSequenceRef.current.shift();
+        }
+        if (typedSequenceRef.current.join('') === 'admin') {
+          typedSequenceRef.current = [];
+          if (onOpenAdminPrompt) onOpenAdminPrompt();
+          else onNavigate('admin');
         }
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onOpenAdminPrompt, onNavigate]);
@@ -99,9 +94,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           className={`nav-floating-pill ${isScrolled ? 'scrolled' : ''}`}
           style={{ pointerEvents: 'auto' }}
         >
-          {/* Brand Monogram & Title (5 clicks on logo badge opens dealer vault) */}
+          {/* Brand Monogram & Title */}
           <div
-            onClick={handleLogoBadgeClick}
+            onClick={() => onNavigate('home')}
             style={{
               cursor: 'pointer',
               display: 'flex',
@@ -116,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 width: '34px',
                 height: '32px',
                 background: isAdmin ? 'rgba(255, 90, 31, 0.2)' : '#161616',
-                border: `1px solid ${isAdmin ? 'var(--accent-orange)' : logoClicks > 0 ? 'rgba(255, 90, 31, 0.6)' : 'rgba(255, 255, 255, 0.12)'}`,
+                border: `1px solid ${isAdmin ? 'var(--accent-orange)' : 'rgba(255, 255, 255, 0.12)'}`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -250,6 +245,29 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               BRANDS
             </button>
+
+            <button
+              onClick={() => {
+                if (isAdmin) {
+                  onNavigate('admin');
+                } else if (onOpenAdminPrompt) {
+                  onOpenAdminPrompt();
+                } else {
+                  onNavigate('admin');
+                }
+              }}
+              className={`nav-link-item ${activePage === 'admin' ? 'active' : ''}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                color: activePage === 'admin' ? 'var(--accent-orange)' : undefined,
+              }}
+              title="Client Inventory Portal (Passcode Required)"
+            >
+              <Lock size={12} color="var(--accent-orange)" />
+              <span>PORTAL</span>
+            </button>
           </nav>
 
           {/* Right Action Icons & Sell Ride CTA */}
@@ -327,30 +345,37 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hide-on-mobile">GARAGE</span>
             </button>
 
-            {isAdmin && (
-              <button
-                onClick={() => onNavigate('admin')}
-                style={{
-                  background: 'rgba(255, 90, 31, 0.15)',
-                  border: '1px solid var(--accent-orange)',
-                  borderRadius: '999px',
-                  color: 'var(--accent-orange)',
-                  padding: '5px 12px',
-                  fontSize: '0.72rem',
-                  fontFamily: 'var(--font-mono)',
-                  fontWeight: 800,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  boxShadow: '0 0 12px rgba(255, 90, 31, 0.25)',
-                }}
-                title="Open Dealer Inventory Vault"
-              >
-                <Shield size={12} />
-                <span>DEALER</span>
-              </button>
-            )}
+            <button
+              onClick={() => {
+                if (isAdmin) {
+                  onNavigate('admin');
+                } else if (onOpenAdminPrompt) {
+                  onOpenAdminPrompt();
+                } else {
+                  onNavigate('admin');
+                }
+              }}
+              style={{
+                background: isAdmin ? 'rgba(255, 90, 31, 0.18)' : 'rgba(255, 255, 255, 0.05)',
+                border: `1px solid ${isAdmin ? 'var(--accent-orange)' : 'rgba(255, 255, 255, 0.15)'}`,
+                borderRadius: '999px',
+                color: isAdmin ? 'var(--accent-orange)' : '#F5F5F2',
+                padding: '5px 12px',
+                fontSize: '0.72rem',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                boxShadow: isAdmin ? '0 0 12px rgba(255, 90, 31, 0.25)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+              title="Client Inventory Portal (Passcode: 1234)"
+            >
+              <Lock size={12} color="var(--accent-orange)" />
+              <span>{isAdmin ? 'CONSOLE' : 'PORTAL'}</span>
+            </button>
 
             <button
               onClick={onOpenSellModal}
@@ -543,6 +568,54 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
             >
               05 / SELL YOUR RIDE <ArrowUpRight size={32} color="var(--accent-orange)" />
+            </div>
+
+            <div
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setTimeout(() => {
+                  if (isAdmin) {
+                    onNavigate('admin');
+                  } else if (onOpenAdminPrompt) {
+                    onOpenAdminPrompt();
+                  } else {
+                    onNavigate('admin');
+                  }
+                }, 50);
+              }}
+              style={{
+                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 800,
+                cursor: 'pointer',
+                color: activePage === 'admin' ? 'var(--accent-orange)' : '#C5C5C0',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-orange)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = activePage === 'admin' ? 'var(--accent-orange)' : '#C5C5C0')}
+            >
+              <span>06 / CLIENT PORTAL</span>
+              <span
+                style={{
+                  fontSize: '0.68rem',
+                  fontFamily: 'var(--font-mono)',
+                  background: 'rgba(255, 90, 31, 0.15)',
+                  border: '1px solid rgba(255, 90, 31, 0.4)',
+                  color: 'var(--accent-orange)',
+                  padding: '3px 10px',
+                  borderRadius: '6px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontWeight: 700,
+                  letterSpacing: '0.08em',
+                }}
+              >
+                <Lock size={12} /> PIN
+              </span>
             </div>
           </div>
 
